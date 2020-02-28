@@ -1,28 +1,37 @@
-import React from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import PropTypes from 'prop-types';
+"use strict";
 
+import React from "react";
+import PropTypes from "prop-types";
+import Modal from "react-modal";
 
-export default class COMPONETN extends React.Component{
+Modal.setAppElement("#app");
 
-  constructor(props){
+export default function LMSModal(props) {
+  return (
+    <div>
+      <Modal
+        isOpen={props.openHandel}
+        onRequestClose={props.closeHandel}
+        contentLabel={props.title}
+      >
+        <button
+          type="button"
+          className="btn btn-primary btn-sm"
+          onClick={props.closeHandel}
+        >
+          Close
+        </button>
 
-    super(props);
-
-    this.state = {
-
-    }
-  }
-
-  render(){
-    return (
-
-    )
-  }
+        <h2>{props.title}</h2>
+        {props.children}
+      </Modal>
+    </div>
+  );
 }
 
-COMPONENT.propTypes = {
-  type: PropTypes.string.isRequired
+LMSModal.propTypes = {
+  title: PropTypes.string.isRequired,
+  openHandel: PropTypes.func.isRequired,
+  closeHandel: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired
 };
