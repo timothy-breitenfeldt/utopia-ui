@@ -2,22 +2,41 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import Modal from "react-modal";
+import ReactModal from "react-modal";
 
-Modal.setAppElement("#app");
+ReactModal.setAppElement("#app");
 
-export default function LMSModal(props) {
+export default class Modal extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      showModal: false
+    };
+
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+      openModal() {
+    this.setState({ showModal: true });
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
+  }
+
+  this.render() {
   return (
     <div>
       <Modal
-        isOpen={props.openHandel}
-        onRequestClose={props.closeHandel}
+        isOpen={this.state.showModal}
+        onRequestClose={this.state.showModal}
         contentLabel={props.title}
       >
         <button
           type="button"
           className="btn btn-primary btn-sm"
-          onClick={props.closeHandel}
+          onClick={this.closeModal}
         >
           Close
         </button>
@@ -28,6 +47,7 @@ export default function LMSModal(props) {
     </div>
   );
 }
+
 
 LMSModal.propTypes = {
   title: PropTypes.string.isRequired,
