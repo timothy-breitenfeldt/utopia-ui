@@ -1,7 +1,7 @@
 "use strict"
 
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from "@reach/router";
 
 
 export const Header = () => {
@@ -10,9 +10,7 @@ export const Header = () => {
             <div className="container-fluid">
                 <ul className="list-inline">
                     <li className="list-inline-item">
-                        <Link to="/" className="navbar-brand">
-                            <img width="90px" height="30px" src="images/logo.png" />
-                        </Link>
+                      <Link to="/" replace>Home </Link>
                     </li>
                     <li className="list-inline-item"><Link to="/" replace>Home</Link></li>
                     <li className="list-inline-item"><Link to="/path/1" replace>RESOURCE 1</Link></li>
