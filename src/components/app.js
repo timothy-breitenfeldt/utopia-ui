@@ -4,6 +4,9 @@ import React from 'react';
 
 import {Header} from './header.js';
 import {Home} from './home.js';
+import {CounterComponent} from './CounterComponent.js'
+import {AgentComponent} from './AgentComponent.js'
+import {OnlineComponent} from './OnlineComponent.js'
 
 export class App extends React.Component{
 
@@ -41,25 +44,34 @@ export class App extends React.Component{
 
     render() {
       let content = '';
-      if(this.props.state.user.role === 'COUNTER'){
+      if(this.state.user.role === 'COUNTER'){
         content =(
           <CounterComponent/>
         )
       }
-      else if(this.props.state.user.role === 'ONLINE'){
+      else if(this.state.user.role === 'AGENT'){
+        content =(
+          <AgentComponent/>
+        )
+      }
+      else if(this.state.user.role === 'ONLINE'){
         content =(
           <OnlineComponent/>
         )
       }
-      else if(this.props.state.user.role === 'AGENT'){
+      else{
         content =(
-          <AgentComponent/>
+          <div>Hello, Guest User</div>
         )
       }
       return(
           //return whatever is needed that is common between home
           //then add the content
-          <div>HELLO WORLD</div>
+          <div>
+            <Header/>
+            <Home path="/"/>
+            {content}
+          </div>
       );
     }
 }
