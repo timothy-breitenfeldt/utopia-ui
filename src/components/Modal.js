@@ -7,17 +7,17 @@ import ReactModal from "react-modal";
 ReactModal.setAppElement("#app");
 
 export default class Modal extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      showModal: false
+      showModal: true
     };
 
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
 
-      openModal() {
+  openModal() {
     this.setState({ showModal: true });
   }
 
@@ -25,13 +25,12 @@ export default class Modal extends React.Component {
     this.setState({ showModal: false });
   }
 
-  this.render() {
-  return (
-    <div>
-      <Modal
+  render() {
+    return (
+      <ReactModal
         isOpen={this.state.showModal}
-        onRequestClose={this.state.showModal}
-        contentLabel={props.title}
+        onRequestClose={this.closeModal}
+        contentLabel={this.props.title}
       >
         <button
           type="button"
@@ -41,17 +40,13 @@ export default class Modal extends React.Component {
           Close
         </button>
 
-        <h2>{props.title}</h2>
-        {props.children}
-      </Modal>
-    </div>
-  );
+        {this.props.children}
+      </ReactModal>
+    );
+  }
 }
 
-
-LMSModal.propTypes = {
+Modal.propTypes = {
   title: PropTypes.string.isRequired,
-  openHandel: PropTypes.func.isRequired,
-  closeHandel: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 };
