@@ -3,7 +3,7 @@
 import Dispatcher from "../dispatcher/appDispatcher";
 import axios from "axios";
 
-import { config } from "../config";
+import config from "../config";
 
 export default class LoginActions {
   constructor() {
