@@ -8,14 +8,14 @@ import { CounterComponent } from "./CounterComponent.js";
 import { AgentComponent } from "./AgentComponent.js";
 import { OnlineComponent } from "./OnlineComponent.js";
 import LoginComponent from "./LoginComponent.js";
+import loginFactory from "../factories/loginFactory.js";
+import loginStore from "../stores/loginStore";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        role: ""
-      },
+      loginState: loginFactory.getLoginStateObject(),
       itinerary: {
         itineraryList: [],
         pending: false,
@@ -42,18 +42,31 @@ export class App extends React.Component {
     };
   }
 
+  _onLoggingIn() {
+    this.setState({ loginState: loginStore.loggingIn() });
+  }
+
+  componentDidMount() {
+    loginStore.addChangeListener(this._onLoggingIn.bind(this));
+  }
+
+  componentWillUnmount() {
+    loginStore.removeChangeListener(this._onLoggingIn.bind(this));
+  }
+
   render() {
     let content = "";
-    if (this.state.user.role === "COUNTER") {
+    if (this.state.loginState.user.role === "COUNTER") {
       content = <CounterComponent />;
-    } else if (this.state.user.role === "AGENT") {
+    } else if (this.state.loginState.user.role === "AGENT") {
       content = <AgentComponent />;
-    } else if (this.state.user.role === "ONLINE") {
+    } else if (this.state.loginState.user.role === "ONLINE") {
       content = <OnlineComponent />;
     } else {
       //content = <div>Hello, Guest User</div>;
       content = <LoginComponent />;
     }
+
     return (
       //return whatever is needed that is common between home
       //then add the content
