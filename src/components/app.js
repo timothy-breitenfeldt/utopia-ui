@@ -3,16 +3,18 @@
 import React from "react";
 import Cookie from "js-cookie";
 
+import {Router} from '@reach/router'
 import {Header} from './header.js';
 import {Home} from './home.js';
 import {CounterComponent} from './CounterComponent.js';
 import {AgentComponent} from './AgentComponent.js';
 import {OnlineComponent} from './OnlineComponent.js';
+import {FlightPage} from './FlightPage.js';
+import FlightStore from '../stores/flightStore';
 import {FlightSearch} from './FlightSearch.js';
 import LoginComponent from "./LoginComponent.js";
 import { getLoginStateObject } from "../factories/loginFactory";
 import loginStore from "../stores/loginStore";
-
 
 export class App extends React.Component {
   constructor(props) {
@@ -51,6 +53,7 @@ export class App extends React.Component {
 
   componentDidMount() {
     loginStore.addChangeListener(this._onLoggingIn.bind(this));
+    FlightStore.addChangeListener(this._onFlightChange.bind(this));
   }
 
 
@@ -72,13 +75,24 @@ export class App extends React.Component {
           //then add the content
           <div>
             <Header/>
-            <Home path="/"/>
+            <Home/>
             {content}
+            <div>
+              <Router>
+                <FlightPage path='/flights/search'  flight = {this.state.flight}/>
+              </Router>
+            </div>
             <FlightSearch />
           </div>
       );
+    }
   }
   componentWillUnmount() {
     loginStore.removeChangeListener(this._onLoggingIn.bind(this));
+    FlightStore.removeChangeListener(this._onFlightChange.bind(this));
   }
+  _onFlightChange(){
+      this.setState({flight: FlightStore.getAllflights()});
+    }
 }
+
