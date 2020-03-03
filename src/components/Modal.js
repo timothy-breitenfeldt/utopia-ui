@@ -2,36 +2,51 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import Modal from "react-modal";
+import ReactModal from "react-modal";
 
-Modal.setAppElement("#app");
+ReactModal.setAppElement("#app");
 
-export default function LMSModal(props) {
-  return (
-    <div>
-      <Modal
-        isOpen={props.openHandel}
-        onRequestClose={props.closeHandel}
-        contentLabel={props.title}
+export default class Modal extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: true
+    };
+
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ showModal: true });
+  }
+
+  closeModal() {
+    this.setState({ showModal: false });
+  }
+
+  render() {
+    return (
+      <ReactModal
+        isOpen={this.state.showModal}
+        onRequestClose={this.closeModal}
+        contentLabel={this.props.title}
       >
         <button
           type="button"
           className="btn btn-primary btn-sm"
-          onClick={props.closeHandel}
+          onClick={this.closeModal}
         >
           Close
         </button>
 
-        <h2>{props.title}</h2>
-        {props.children}
-      </Modal>
-    </div>
-  );
+        {this.props.children}
+      </ReactModal>
+    );
+  }
 }
 
-LMSModal.propTypes = {
+Modal.propTypes = {
   title: PropTypes.string.isRequired,
-  openHandel: PropTypes.func.isRequired,
-  closeHandel: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
 };
