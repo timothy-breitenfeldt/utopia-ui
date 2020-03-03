@@ -9,7 +9,7 @@ import {CounterComponent} from './CounterComponent.js';
 import {AgentComponent} from './AgentComponent.js';
 import {OnlineComponent} from './OnlineComponent.js';
 import {FlightPage} from './FlightPage.js';
-import FlightStore from '../store/flightStore';
+import FlightStore from '../stores/flightStore';
 export class App extends React.Component{
 
     constructor(props) {
