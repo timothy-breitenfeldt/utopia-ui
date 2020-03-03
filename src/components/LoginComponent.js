@@ -1,7 +1,9 @@
 "use strict";
 
 import React from "react";
-import Modal from "./Modal";
+import PropTypes from "prop-types";
+
+import LoginActions from "../actions/LoginActions";
 
 export default class LoginComponent extends React.Component {
   constructor(props) {
@@ -12,27 +14,17 @@ export default class LoginComponent extends React.Component {
       password: ""
     };
 
-    this.onSubmit = this.onSubmit.bind(this);
+    this.onFormSubmition = this.onFormSubmition.bind(this);
     this.handelFormChange = this.handelFormChange.bind(this);
   }
 
-  onSubmit(event) {
+  onFormSubmition(event) {
     event.preventDefault();
-    //LoginActions.login(this.state.email, this.state.password);
+    LoginActions.login(this.state.email, this.state.password);
   }
 
   handelFormChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-  }
-
-  getError() {
-    if (this.props.loginState.authenticationState.failure) {
-      return (
-        <div className="alert alert-danger" role="alert">
-          {this.props.error}
-        </div>
-      );
-    }
   }
 
   render() {
@@ -53,9 +45,15 @@ export default class LoginComponent extends React.Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h5 className="card-title text-center">Sign In</h5>
-                {this.getError()}
+                <div
+                  className="alert alert-danger"
+                  role="alert"
+                  aria-live="assertive"
+                >
+                  {JSON.stringify(this.props.loginState.error)}
+                </div>
 
-                <form onSubmit={this.onSubmit} className="form-signin">
+                <form onSubmit={this.onFormSubmition} className="form-signin">
                   <div className="form-label-group">
                     <label htmlFor="inputEmail">Email address</label>
                     <input
@@ -85,12 +83,11 @@ export default class LoginComponent extends React.Component {
                     />
                   </div>
 
-                  <button
-                    className="btn btn-lg btn-primary btn-block text-uppercase"
+                  <input
                     type="submit"
-                  >
-                    Sign in
-                  </button>
+                    value="Sign in"
+                    className="btn btn-lg btn-primary btn-block text-uppercase"
+                  />
                 </form>
               </div>
             </div>
@@ -102,3 +99,7 @@ export default class LoginComponent extends React.Component {
     return <div>{content}</div>;
   }
 }
+
+LoginComponent.propTypes = {
+  loginState: PropTypes.object.isRequired
+};

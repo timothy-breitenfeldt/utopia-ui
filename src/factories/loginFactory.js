@@ -2,7 +2,19 @@
 
 export function getLoginStateObject() {
   return {
-    user: null,
+    user: {
+      email: "",
+      role: "",
+      first_name: "",
+      last_name: "",
+      dob: "",
+      phone: "",
+      street: "",
+      city: "",
+      state: "",
+      country: "",
+      postal_code: ""
+    },
     authenticationState: {
       pending: false,
       failure: false,

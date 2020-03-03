@@ -4,7 +4,7 @@ import Dispatcher from "../dispatcher/appDispatcher";
 import { EventEmitter } from "events";
 import Cookie from "js-cookie";
 
-import loginFactory from "../factories/loginFactory";
+import { getLoginStateObject } from "../factories/loginFactory";
 
 class LoginStore extends EventEmitter {
   constructor(props) {
@@ -12,7 +12,7 @@ class LoginStore extends EventEmitter {
     this.CHANGE_EVENT = "change";
 
     this.store = {
-      loginState: loginFactory.getLoginStateObject()
+      loginState: getLoginStateObject()
     };
   }
 
@@ -51,6 +51,7 @@ Dispatcher.register(action => {
   switch (action.actionType) {
     case "login_started":
       loginStore.resetLoginState();
+      loginStore.store.loginState.error = "";
       loginStore.store.loginState.authenticationState.pending = true;
       loginStore.emitChange();
       break;
@@ -63,6 +64,7 @@ Dispatcher.register(action => {
     case "login_successful":
       loginStore.resetLoginState();
       loginStore.store.loginState.authenticationState.success = true;
+      loginStore.store.loginState.error = "";
       loginStore.store.loginState.user = action.data.user;
       loginStore.setJwt(action.data.token);
       loginStore.emitChange();

@@ -1,6 +1,7 @@
 "use strict";
 
 import React from "react";
+import Cookie from "js-cookie";
 
 import { Header } from "./header.js";
 import { Home } from "./home.js";
@@ -8,14 +9,14 @@ import { CounterComponent } from "./CounterComponent.js";
 import { AgentComponent } from "./AgentComponent.js";
 import { OnlineComponent } from "./OnlineComponent.js";
 import LoginComponent from "./LoginComponent.js";
-import loginFactory from "../factories/loginFactory.js";
+import { getLoginStateObject } from "../factories/loginFactory";
 import loginStore from "../stores/loginStore";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginState: loginFactory.getLoginStateObject(),
+      loginState: getLoginStateObject(),
       itinerary: {
         itineraryList: [],
         pending: false,
@@ -60,11 +61,13 @@ export class App extends React.Component {
       content = <CounterComponent />;
     } else if (this.state.loginState.user.role === "AGENT") {
       content = <AgentComponent />;
-    } else if (this.state.loginState.user.role === "ONLINE") {
+    } else if (this.state.loginState.user.role === "TRAVELER") {
+      alert(JSON.stringify(this.state.loginState.user));
+      alert(Cookie.get("token"));
       content = <OnlineComponent />;
     } else {
       //content = <div>Hello, Guest User</div>;
-      content = <LoginComponent />;
+      content = <LoginComponent loginState={this.state.loginState} />;
     }
 
     return (

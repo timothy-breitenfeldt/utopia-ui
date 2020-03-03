@@ -5,11 +5,9 @@ import axios from "axios";
 
 import config from "../config";
 
-export default class LoginActions {
-  constructor() {
-    this.url = config.url;
-  }
+const URL = config.url;
 
+const LoginActions = {
   login(email, password) {
     Dispatcher.dispatch({
       actionType: "login_started"
@@ -17,7 +15,7 @@ export default class LoginActions {
     const credentials = { email: email, password: password };
 
     axios
-      .post(`${this.url}/account`, credentials)
+      .post(`${URL}/api/account`, credentials)
       .then(result => {
         Dispatcher.dispatch({
           actionType: "login_successful",
@@ -31,4 +29,6 @@ export default class LoginActions {
         });
       });
   }
-}
+};
+
+export default LoginActions;
