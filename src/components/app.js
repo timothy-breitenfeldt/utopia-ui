@@ -3,22 +3,26 @@
 import React from "react";
 import Cookie from "js-cookie";
 
-import {Header} from './header.js';
-import {Home} from './home.js';
-import {CounterComponent} from './CounterComponent.js';
-import {AgentComponent} from './AgentComponent.js';
-import {OnlineComponent} from './OnlineComponent.js';
-import {FlightSearch} from './FlightSearch.js';
-import LoginComponent from "./LoginComponent.js";
-import { getLoginStateObject } from "../factories/loginFactory";
+import { Header } from "./header.js";
+import { Home } from "./home.js";
+import { CounterComponent } from "./CounterComponent.js";
+import { AgentComponent } from "./AgentComponent.js";
+import { OnlineComponent } from "./OnlineComponent.js";
+import { FlightSearch } from "./FlightSearch.js";
+//import LoginComponent from "./LoginComponent.js";
+import {
+  getRegistrationStateObject,
+  getLoginStateObject
+} from "../factories/loginFactory";
 import loginStore from "../stores/loginStore";
-
+import RegistrationComponent from "./RegistrationComponent";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       loginState: getLoginStateObject(),
+      registrationState: getRegistrationStateObject(),
       itinerary: {
         itineraryList: [],
         pending: false,
@@ -53,30 +57,34 @@ export class App extends React.Component {
     loginStore.addChangeListener(this._onLoggingIn.bind(this));
   }
 
-
-    render() {
-		let content = "";
-		if (this.state.loginState.user.role === "COUNTER") {
-			content = <CounterComponent />;
-		} else if (this.state.loginState.user.role === "AGENT") {
-		content = <AgentComponent />;
-		} else if (this.state.loginState.user.role === "TRAVELER") {
-		alert(JSON.stringify(this.state.loginState.user));
-		alert(Cookie.get("token"));
-		content = <OnlineComponent />;
-		} else {
-			content = <LoginComponent loginState={this.state.loginState} />;
-		}
-		return(
-          //return whatever is needed that is common between home
-          //then add the content
-          <div>
-            <Header/>
-            <Home path="/"/>
-            {content}
-            <FlightSearch />
-          </div>
+  render() {
+    let content = "";
+    if (this.state.loginState.user.role === "COUNTER") {
+      content = <CounterComponent />;
+    } else if (this.state.loginState.user.role === "AGENT") {
+      content = <AgentComponent />;
+    } else if (this.state.loginState.user.role === "TRAVELER") {
+      alert(JSON.stringify(this.state.loginState.user));
+      alert(Cookie.get("token"));
+      content = <OnlineComponent />;
+    } else {
+      //content = <LoginComponent loginState={this.state.loginState} />;
+      content = (
+        <RegistrationComponent
+          registrationState={this.state.registrationState}
+        />
       );
+    }
+    return (
+      //return whatever is needed that is common between home
+      //then add the content
+      <div>
+        <Header />
+        <Home path="/" />
+        {content}
+        <FlightSearch />
+      </div>
+    );
   }
   componentWillUnmount() {
     loginStore.removeChangeListener(this._onLoggingIn.bind(this));

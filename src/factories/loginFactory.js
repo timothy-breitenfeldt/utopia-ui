@@ -23,3 +23,14 @@ export function getLoginStateObject() {
     error: ""
   };
 }
+
+export function getRegistrationStateObject() {
+  return {
+    accountCreationState: {
+      pending: false,
+      failure: false,
+      success: false
+    },
+    error: ""
+  };
+}

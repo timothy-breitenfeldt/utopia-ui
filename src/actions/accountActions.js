@@ -7,7 +7,7 @@ import config from "../config";
 
 const URL = config.url;
 
-const LoginActions = {
+const AccountActions = {
   login(email, password) {
     Dispatcher.dispatch({
       actionType: "login_started"
@@ -31,4 +31,4 @@ const LoginActions = {
   }
 };
 
-export default LoginActions;
+export default AccountActions;

@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import LoginActions from "../actions/LoginActions";
+import AccountActions from "../actions/accountActions";
 
 export default class LoginComponent extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export default class LoginComponent extends React.Component {
 
   onFormSubmition(event) {
     event.preventDefault();
-    LoginActions.login(this.state.email, this.state.password);
+    AccountActions.login(this.state.email, this.state.password);
   }
 
   handelFormChange(event) {
