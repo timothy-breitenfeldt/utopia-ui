@@ -2,8 +2,4 @@
 import React from 'react';
 export class OnlineComponent extends React.Component{
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> flight-search

@@ -77,7 +77,7 @@ export class App extends React.Component {
             <FlightSearch />
           </div>
       );
-
+  }
   componentWillUnmount() {
     loginStore.removeChangeListener(this._onLoggingIn.bind(this));
   }
