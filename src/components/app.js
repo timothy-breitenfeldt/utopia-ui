@@ -86,7 +86,7 @@ export class App extends React.Component {
           </div>
       );
     }
-  }
+    
   componentWillUnmount() {
     loginStore.removeChangeListener(this._onLoggingIn.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
