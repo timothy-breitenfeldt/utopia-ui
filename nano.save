@@ -1,0 +1,274 @@
+{ Error: Cannot find module 'js-cookie' from '/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/src/stores'
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:46:17
+    at process (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:173:43)
+    at ondir (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:188:17)
+    at load (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:69:43)
+    at onex (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:92:31)
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:22:47
+    at FSReqWrap.oncomplete (fs.js:152:21)
+  stream:
+   Labeled {
+     _readableState:
+      ReadableState {
+        objectMode: true,
+        highWaterMark: 16,
+        buffer: BufferList { length: 0 },
+        length: 0,
+        pipes: [Object],
+        pipesCount: 1,
+        flowing: true,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        resumeScheduled: false,
+        destroyed: false,
+        defaultEncoding: 'utf8',
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events:
+      { end: [Array],
+        error: [Function],
+        data: [Function: ondata],
+        _mutate: [Object] },
+     _eventsCount: 4,
+     _maxListeners: undefined,
+     _writableState:
+      WritableState {
+        objectMode: true,
+        highWaterMark: 16,
+        finalCalled: false,
+        needDrain: false,
+        ending: true,
+        ended: true,
+        finished: true,
+        destroyed: false,
+        decodeStrings: true,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        corked: 0,
+        sync: false,
+        bufferProcessing: false,
+        onwrite: [Function],
+        writecb: null,
+        writelen: 0,
+        bufferedRequest: null,
+        lastBufferedRequest: null,
+        pendingcb: 0,
+        prefinished: true,
+        errorEmitted: false,
+        bufferedRequestCount: 0,
+        corkedRequestsFree: [Object] },
+     writable: false,
+     allowHalfOpen: true,
+     _options: { objectMode: true },
+     _wrapOptions: { objectMode: true },
+     _streams: [ [Object] ],
+     length: 1,
+     label: 'deps' } } { Error: Cannot find module 'js-cookie' from '/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/src/stores'
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:46:17
+    at process (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:173:43)
+    at ondir (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:188:17)
+    at load (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:69:43)
+    at onex (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:92:31)
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:22:47
+    at FSReqWrap.oncomplete (fs.js:152:21)
+  stream:
+   Labeled {
+     _readableState:
+      ReadableState {
+        objectMode: true,
+        highWaterMark: 16,
+        buffer: BufferList { length: 0 },
+        length: 0,
+        pipes: [Object],
+        pipesCount: 1,
+        flowing: true,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        resumeScheduled: false,
+        destroyed: false,
+        defaultEncoding: 'utf8',
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events:
+      { end: [Array],
+        error: [Function],
+        data: [Function: ondata],
+        _mutate: [Object] },
+     _eventsCount: 4,
+     _maxListeners: undefined,
+     _writableState:
+      WritableState {
+        objectMode: true,
+        highWaterMark: 16,
+        finalCalled: false,
+        needDrain: false,
+        ending: true,
+        ended: true,
+        finished: true,
+        destroyed: false,
+        decodeStrings: true,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        corked: 0,
+        sync: false,
+        bufferProcessing: false,
+        onwrite: [Function],
+        writecb: null,
+        writelen: 0,
+        bufferedRequest: null,
+        lastBufferedRequest: null,
+        pendingcb: 0,
+        prefinished: true,
+        errorEmitted: false,
+        bufferedRequestCount: 0,
+        corkedRequestsFree: [Object] },
+     writable: false,
+     allowHalfOpen: true,
+     _options: { objectMode: true },
+     _wrapOptions: { objectMode: true },
+     _streams: [ [Object] ],
+     length: 1,
+     label: 'deps' } } { Error: Cannot find module 'js-cookie' from '/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/src/stores'
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:46:17
+    at process (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:173:43)
+    at ondir (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:188:17)
+    at load (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:69:43)
+    at onex (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:92:31)
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:22:47
+    at FSReqWrap.oncomplete (fs.js:152:21)
+  stream:
+   Labeled {
+     _readableState:
+      ReadableState {
+        objectMode: true,
+        highWaterMark: 16,
+        buffer: BufferList { length: 0 },
+        length: 0,
+        pipes: [Object],
+        pipesCount: 1,
+        flowing: true,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        resumeScheduled: false,
+        destroyed: false,
+        defaultEncoding: 'utf8',
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events:
+      { end: [Array],
+        error: [Function],
+        data: [Function: ondata],
+        _mutate: [Object] },
+     _eventsCount: 4,
+     _maxListeners: undefined,
+     _writableState:
+      WritableState {
+        objectMode: true,
+        highWaterMark: 16,
+        finalCalled: false,
+        needDrain: false,
+        ending: true,
+        ended: true,
+        finished: true,
+        destroyed: false,
+        decodeStrings: true,
+        defaultEncoding: 'utf8',
+        length: 0,
+        writing: false,
+        corked: 0,
+        sync: false,
+        bufferProcessing: false,
+        onwrite: [Function],
+        writecb: null,
+        writelen: 0,
+        bufferedRequest: null,
+        lastBufferedRequest: null,
+        pendingcb: 0,
+        prefinished: true,
+        errorEmitted: false,
+        bufferedRequestCount: 0,
+        corkedRequestsFree: [Object] },
+     writable: false,
+     allowHalfOpen: true,
+     _options: { objectMode: true },
+     _wrapOptions: { objectMode: true },
+     _streams: [ [Object] ],
+     length: 1,
+     label: 'deps' } } { Error: Cannot find module 'js-cookie' from '/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/src/stores'
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:46:17
+    at process (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:173:43)
+    at ondir (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:188:17)
+    at load (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:69:43)
+    at onex (/c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:92:31)
+    at /c/Users/timot/Google Drive/smoothstack/training/project/utopia-airlines/utopia-ars/utopia-ui/node_modules/browser-resolve/node_modules/resolve/lib/async.js:22:47
+    at FSReqWrap.oncomplete (fs.js:152:21)
+  stream:
+   Labeled {
+     _readableState:
+      ReadableState {
+        objectMode: true,
+        highWaterMark: 16,
+        buffer: BufferList { length: 0 },
+        length: 0,
+        pipes: [Object],
+        pipesCount: 1,
+        flowing: true,
+        ended: false,
+        endEmitted: false,
+        reading: true,
+        sync: false,
+        needReadable: true,
+        emittedReadable: false,
+        readableListening: false,
+        resumeScheduled: false,
+        destroyed: false,
+        defaultEncoding: 'utf8',
+        awaitDrain: 0,
+        readingMore: false,
+        decoder: null,
+        encoding: null },
+     readable: true,
+     domain: null,
+     _events:
+      { end: [Array],
+        error: [Function],
+        data: [Function: ondata],
+        _mutate: [Object] },
+     _eventsCount: 4,
+     _maxListeners: undefined,
+     _writableState:
+      WritableState {
+        objectMode: true,
+        highWaterMark: 16,
+        finalCalled: false,
+        needDrain: false,
+        ending: true,
