@@ -1,8 +1,10 @@
 'use strict'
 
 import React from 'react';
-import {InputGroup, Form, FormControl} from "react-bootstrap";
+import Moment from 'moment';
+import {InputGroup, Form, FormControl, Button} from "react-bootstrap";
 
+console.log(Moment.now());
 
 export class FlightSearch extends React.Component {
 
@@ -16,14 +18,32 @@ export class FlightSearch extends React.Component {
     ],
 
     this.state = {
-      oneWay: true
+      oneWay: true,
+      passengers: 1,
+      from: '',
+      to: '',
+      depart: '',
+      return: ''
     }
+
+    this.radioOnChange = this.radioOnChange.bind(this);
+    this.passengersOnChange = this.passengersOnChange.bind(this);
+    this.submitSearch = this.submitSearch.bind(this);
   }
 
   radioOnChange() {
     this.setState( prevState => ({
       oneWay: !prevState.oneWay
     }));
+  }
+
+  passengersOnChange(e) {
+    this.setState({ passengers: e.target.value });
+  }
+
+  submitSearch(e) {
+    console.log(this.state);    
+    e.preventDefault();
   }
 
   render() {
@@ -52,7 +72,7 @@ export class FlightSearch extends React.Component {
         width: "500px",
         marginLeft: "10px"
       }}>
-        <Form>
+        <Form onSubmit={this.submitSearch}>
           <Form.Row>
             <Form.Check
               inline checked={this.state['oneWay']}
@@ -60,14 +80,28 @@ export class FlightSearch extends React.Component {
               name="one-way-radio"
               type="radio"
               id="one-way-radio"
-              onChange={ ()=> { this.radioOnChange() }}/>
+              onChange={this.radioOnChange}/>
             <Form.Check
               inline checked={!this.state['oneWay']}
               label="Round trip"
               name="round-trip-radio"
               type="radio"
               id="round-trip-radio"
-              onChange={ ()=> { this.radioOnChange() }}/>
+              onChange={this.radioOnChange}/>
+          </Form.Row>
+          <Form.Row>
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text id="passengers-label" style={{width: '115px'}}>Passengers</InputGroup.Text>
+              </InputGroup.Prepend>
+              <Form.Control as="select" onChange={this.passengersOnChange}>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5+</option>
+              </Form.Control>
+            </InputGroup>
           </Form.Row>
           <Form.Row>
             <InputGroup className="mb-3">
@@ -106,20 +140,7 @@ export class FlightSearch extends React.Component {
             </InputGroup>
           </Form.Row>
           {returnDate}
-          <Form.Row>
-            <InputGroup className="mb-3">
-              <InputGroup.Prepend>
-                <InputGroup.Text id="passengers-label" style={{width: '115px'}}>Passengers</InputGroup.Text>
-              </InputGroup.Prepend>
-              <Form.Control as="select">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5+</option>
-              </Form.Control>
-            </InputGroup>
-          </Form.Row>
+          <Button variant="dark" type="submit" value="Submit">Search</Button>
         </Form>
       </div>
     )
