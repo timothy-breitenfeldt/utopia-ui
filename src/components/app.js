@@ -4,9 +4,16 @@ import React from 'react';
 
 import {Header} from './header.js';
 import {Home} from './home.js';
+<<<<<<< HEAD
 import {CounterComponent} from './CounterComponent.js'
 import {AgentComponent} from './AgentComponent.js'
 import {OnlineComponent} from './OnlineComponent.js'
+=======
+import {CounterComponent} from './CounterComponent.js';
+import {AgentComponent} from './AgentComponent.js';
+import {OnlineComponent} from './OnlineComponent.js';
+import {FlightSearch} from './FlightSearch.js';
+>>>>>>> flight-search
 
 export class App extends React.Component{
 
@@ -71,6 +78,10 @@ export class App extends React.Component{
             <Header/>
             <Home path="/"/>
             {content}
+<<<<<<< HEAD
+=======
+            <FlightSearch />
+>>>>>>> flight-search
           </div>
       );
     }

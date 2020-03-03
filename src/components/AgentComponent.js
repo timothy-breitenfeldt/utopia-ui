@@ -2,4 +2,8 @@
 import React from 'react';
 export class AgentComponent extends React.Component{
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> flight-search
