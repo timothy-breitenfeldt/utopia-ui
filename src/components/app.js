@@ -4,10 +4,10 @@ import React from 'react';
 
 import {Header} from './header.js';
 import {Home} from './home.js';
-import {CounterComponent} from './CounterComponent.js'
-import {AgentComponent} from './AgentComponent.js'
-import {OnlineComponent} from './OnlineComponent.js'
-import {FlightSearch} from './FlightSearch.js'
+import {CounterComponent} from './CounterComponent.js';
+import {AgentComponent} from './AgentComponent.js';
+import {OnlineComponent} from './OnlineComponent.js';
+import {FlightSearch} from './FlightSearch.js';
 
 export class App extends React.Component{
 
