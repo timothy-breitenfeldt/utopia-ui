@@ -15,6 +15,8 @@ import {FlightSearch} from './FlightSearch.js';
 import LoginComponent from "./LoginComponent.js";
 import { getLoginStateObject } from "../factories/loginFactory";
 import loginStore from "../stores/loginStore";
+import { ItineraryComponent } from "./ItineraryComponent.js";
+import ItineraryStore from "../stores/itineraryStore.js";
 
 export class App extends React.Component {
   constructor(props) {
@@ -23,9 +25,11 @@ export class App extends React.Component {
       loginState: getLoginStateObject(),
       itinerary: {
         itineraryList: [],
-        pending: false,
-        success: false,
-        failure: false
+        readState: {
+          pending: false,
+          success: false,
+          failure: false
+        }
       },
       traveler: {
         travelerList: [],
@@ -46,16 +50,6 @@ export class App extends React.Component {
       error: ""
     };
   }
-
-  _onLoggingIn() {
-    this.setState({ loginState: loginStore.loggingIn() });
-  }
-
-  componentDidMount() {
-    loginStore.addChangeListener(this._onLoggingIn.bind(this));
-    FlightStore.addChangeListener(this._onFlightChange.bind(this));
-  }
-
 
     render() {
 		let content = "";
@@ -80,19 +74,32 @@ export class App extends React.Component {
             <div>
               <Router>
                 <FlightPage path='/flights/search'  flight = {this.state.flight}/>
+                <ItineraryComponent path='/itineraries' itinerary = {this.state.itinerary}/>
               </Router>
             </div>
             <FlightSearch />
           </div>
       );
     }
-    
+  componentDidMount() {
+      loginStore.addChangeListener(this._onLoggingIn.bind(this));
+      FlightStore.addChangeListener(this._onFlightChange.bind(this));
+      ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
+  }
+  
   componentWillUnmount() {
-    loginStore.removeChangeListener(this._onLoggingIn.bind(this));
-    FlightStore.removeChangeListener(this._onFlightChange.bind(this));
+      loginStore.removeChangeListener(this._onLoggingIn.bind(this));
+      FlightStore.removeChangeListener(this._onFlightChange.bind(this));
+      ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
   }
   _onFlightChange(){
       this.setState({flight: FlightStore.getAllflights()});
     }
+  _onLoggingIn() {
+      this.setState({ loginState: loginStore.loggingIn() });
+  }
+  _onItineraryChange(){
+    this.setState({itinerary: ItineraryStore.getAllitineraries()});
+  }
 }
 

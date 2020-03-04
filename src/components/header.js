@@ -10,7 +10,7 @@ export const Header = () => {
                 <ul className="list-inline">
                     <li className="list-inline-item"><Link to="/" replace>Home</Link></li>
                     <li className="list-inline-item"><Link to="/flights/search" replace>Flights Search</Link></li>
-                    <li className="list-inline-item"><Link to="/path/2" replace>RESOURCE 2</Link></li>
+                    <li className="list-inline-item"><Link to="/itineraries" replace>Itineraries</Link></li>
                 </ul>
             </div>
         </nav>
