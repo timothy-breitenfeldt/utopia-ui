@@ -1,5 +1,7 @@
-"use strict"
-import React from 'react';
-export class OnlineComponent extends React.Component{
-
+"use strict";
+import React from "react";
+export class OnlineComponent extends React.Component {
+  render() {
+    return null;
+  }
 }

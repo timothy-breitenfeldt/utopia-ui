@@ -1,7 +1,8 @@
 "use strict";
 
-export function getLoginStateObject() {
+export function getAccountStateObject() {
   return {
+    redirectToLogin: false,
     user: {
       email: "",
       role: "",
@@ -15,7 +16,12 @@ export function getLoginStateObject() {
       country: "",
       postal_code: ""
     },
-    authenticationState: {
+    loginState: {
+      pending: false,
+      failure: false,
+      success: false
+    },
+    registrationState: {
       pending: false,
       failure: false,
       success: false

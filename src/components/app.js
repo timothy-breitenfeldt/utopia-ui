@@ -2,25 +2,26 @@
 
 import React from "react";
 import Cookie from "js-cookie";
+import { Router, Redirect } from "@reach/router";
 
-import {Router} from '@reach/router'
-import {Header} from './header.js';
-import {Home} from './home.js';
-import {CounterComponent} from './CounterComponent.js';
-import {AgentComponent} from './AgentComponent.js';
-import {OnlineComponent} from './OnlineComponent.js';
-import {FlightPage} from './FlightPage.js';
-import FlightStore from '../stores/flightStore';
-import {FlightSearch} from './FlightSearch.js';
+import { Header } from "./header.js";
+import { Home } from "./home.js";
+import { CounterComponent } from "./CounterComponent.js";
+import { AgentComponent } from "./AgentComponent.js";
+import { OnlineComponent } from "./OnlineComponent.js";
+import { FlightPage } from "./FlightPage.js";
+import FlightStore from "../stores/flightStore";
+import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
-import { getLoginStateObject } from "../factories/loginFactory";
-import loginStore from "../stores/loginStore";
+import * as accountFactory from "../factories/accountFactory";
+import accountStore from "../stores/accountStore";
+import RegistrationComponent from "./RegistrationComponent";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginState: getLoginStateObject(),
+      accountState: accountFactory.getAccountStateObject(),
       itinerary: {
         itineraryList: [],
         pending: false,
@@ -47,51 +48,60 @@ export class App extends React.Component {
     };
   }
 
-  _onLoggingIn() {
-    this.setState({ loginState: loginStore.loggingIn() });
+  _updateAccountState() {
+    this.setState({ accountState: accountStore.updateAccountState() });
+  }
+
+  _onFlightChange() {
+    this.setState({ flight: FlightStore.getAllflights() });
   }
 
   componentDidMount() {
-    loginStore.addChangeListener(this._onLoggingIn.bind(this));
+    accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
   }
 
-
-    render() {
-		let content = "";
-		if (this.state.loginState.user.role === "COUNTER") {
-			content = <CounterComponent />;
-		} else if (this.state.loginState.user.role === "AGENT") {
-		content = <AgentComponent />;
-		} else if (this.state.loginState.user.role === "TRAVELER") {
-		alert(JSON.stringify(this.state.loginState.user));
-		alert(Cookie.get("token"));
-		content = <OnlineComponent />;
-		} else {
-			content = <LoginComponent loginState={this.state.loginState} />;
-		}
-		return(
-          //return whatever is needed that is common between home
-          //then add the content
-          <div>
-            <Header/>
-            <Home/>
-            {content}
-            <div>
-              <Router>
-                <FlightPage path='/flights/search'  flight = {this.state.flight}/>
-              </Router>
-            </div>
-            <FlightSearch />
-          </div>
-      );
-    }
-
   componentWillUnmount() {
-    loginStore.removeChangeListener(this._onLoggingIn.bind(this));
+    accountStore.removeChangeListener(this._updateAccountState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
   }
-  _onFlightChange(){
-    this.setState({flight: FlightStore.getAllflights()});
+
+  render() {
+    let content = "";
+
+    if (this.state.accountState.redirectToLogin) {
+      content = <Redirect to="/account" />;
+    } else if (this.state.accountState.user.role === "COUNTER") {
+      content = <Redirect to="/counter" />;
+    } else if (this.state.accountState.user.role === "AGENT") {
+      content = <Redirect to="/agent" />;
+    } else if (this.state.accountState.user.role === "TRAVELER") {
+      alert(JSON.stringify(this.state.accountState.user));
+      alert(Cookie.get("token"));
+      content = <Redirect to="/online" />;
+    } else {
+      content = <Home />;
+    }
+    return (
+      <div>
+        <Router>
+          <CounterComponent path="/counter" />
+          <OnlineComponent path="/online" />
+          <AgentComponent path="/agent" />
+          <FlightPage path="/flights/search" flight={this.state.flight} />
+          <LoginComponent
+            path="/account"
+            accountState={this.state.accountState}
+          />
+          <RegistrationComponent
+            path="/account/register"
+            accountState={this.state.accountState}
+          />
+        </Router>
+
+        <FlightSearch />
+        {content}
+      </div>
+    );
   }
 }
