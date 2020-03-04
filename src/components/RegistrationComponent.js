@@ -31,17 +31,21 @@ export default class RegistrationComponent extends React.Component {
 
   onFormSubmition(event) {
     event.preventDefault();
-    AccountActions.login(this.state.email, this.state.password);
+
+    if (this.password != this.state.confirm_password) {
+      this.props.accountState.error.response.data.message =
+        "Passwords do not match";
+      this.setState({ confirm_password: "", password: "" });
+    }
+
+    const user = {};
+    Object.assign(user, this.state);
+    delete user.confirm_password;
+    AccountActions.register(user);
   }
 
   handelFormChange(event) {
     this.setState({ [event.target.name]: event.target.value });
-  }
-
-  getError() {
-    return (
-      <div className="alert alert-danger">{this.props.accountState.error}</div>
-    );
   }
 
   render() {
@@ -50,7 +54,7 @@ export default class RegistrationComponent extends React.Component {
     if (this.props.accountState.registrationState.pending) {
       content = (
         <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="status">
+          <div className="spinner-border" role="alert">
             <span className="sr-only">Loading...</span>
           </div>
         </div>
@@ -62,8 +66,10 @@ export default class RegistrationComponent extends React.Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h5 className="card-title text-center">Register</h5>
-                <div aria-live="assertive">
-                  {this.props.accountState.error ? this.getError() : null}
+                <div className="alert alert-danger" role="alert">
+                  {this.props.accountState.error
+                    ? this.props.accountState.error.response.data.message
+                    : null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">

@@ -28,6 +28,27 @@ const AccountActions = {
           error: error
         });
       });
+  },
+
+  register(user) {
+    Dispatcher.dispatch({
+      actionType: "registration_started"
+    });
+
+    axios
+      .post(`${URL}/api/account/register`, user)
+      .then(result => {
+        Dispatcher.dispatch({
+          actionType: "registration_successful",
+          data: result.data
+        });
+      })
+      .catch(error => {
+        Dispatcher.dispatch({
+          actionType: "registration_failure",
+          error: error
+        });
+      });
   }
 };
 

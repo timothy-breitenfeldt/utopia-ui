@@ -2,8 +2,8 @@
 
 import React from "react";
 import Cookie from "js-cookie";
+import { Router, Redirect } from "@reach/router";
 
-import { Router } from "@reach/router";
 import { Header } from "./header.js";
 import { Home } from "./home.js";
 import { CounterComponent } from "./CounterComponent.js";
@@ -68,14 +68,17 @@ export class App extends React.Component {
 
   render() {
     let content = "";
-    if (this.state.accountState.user.role === "COUNTER") {
-      content = <CounterComponent />;
+
+    if (this.state.accountState.redirectToLogin) {
+      content = <Redirect to="/account" />;
+    } else if (this.state.accountState.user.role === "COUNTER") {
+      content = <Redirect to="/counter" />;
     } else if (this.state.accountState.user.role === "AGENT") {
-      content = <AgentComponent />;
+      content = <Redirect to="/agent" />;
     } else if (this.state.accountState.user.role === "TRAVELER") {
       alert(JSON.stringify(this.state.accountState.user));
       alert(Cookie.get("token"));
-      content = <OnlineComponent />;
+      content = <Redirect to="/online" />;
     } else {
       content = <Home />;
     }
@@ -83,11 +86,9 @@ export class App extends React.Component {
       //return whatever is needed that is common between home
       //then add the content
       <div>
-        <Header />
-        <FlightSearch />
-        {content}
-
         <Router>
+          <CounterComponent path="/counter" />
+          <OnlineComponent path="/online" />
           <FlightPage path="/flights/search" flight={this.state.flight} />
           <LoginComponent
             path="/account"
@@ -98,6 +99,10 @@ export class App extends React.Component {
             accountState={this.state.accountState}
           />
         </Router>
+        <AgentComponent path="/agent" />
+        <Header />
+        <FlightSearch />
+        {content}
       </div>
     );
   }

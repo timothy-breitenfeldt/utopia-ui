@@ -2,6 +2,7 @@
 
 export function getAccountStateObject() {
   return {
+    redirectToLogin: false,
     user: {
       email: "",
       role: "",

@@ -33,6 +33,7 @@ class AccountStore extends EventEmitter {
   }
 
   resetLoginState() {
+    this.store.accountState.redirectToLogin = false;
     this.store.accountState.loginState = {
       pending: false,
       success: false,
@@ -41,6 +42,7 @@ class AccountStore extends EventEmitter {
   }
 
   resetRegistrationState() {
+    this.store.accountState.redirectToLogin = false;
     this.store.accountState.registrationState = {
       pending: false,
       success: false,
@@ -75,6 +77,25 @@ Dispatcher.register(action => {
       accountStore.store.accountState.error = "";
       accountStore.store.accountState.user = action.data.user;
       accountStore.setJwt(action.data.token);
+      accountStore.emitChange();
+      break;
+    case "registration_started":
+      accountStore.resetRegistrationState();
+      accountStore.store.accountState.error = "";
+      accountStore.store.accountState.registrationState.pending = true;
+      accountStore.emitChange();
+      break;
+    case "registration_failure":
+      accountStore.resetRegistrationState();
+      accountStore.store.accountState.registrationState.failure = true;
+      accountStore.store.accountState.error = action.error;
+      accountStore.emitChange();
+      break;
+    case "registration_successful":
+      accountStore.resetRegistrationState();
+      accountStore.store.accountState.registrationState.success = true;
+      accountStore.store.accountState.error = "";
+      accountStore.store.accountState.redirectToLogin = true;
       accountStore.emitChange();
       break;
   }
