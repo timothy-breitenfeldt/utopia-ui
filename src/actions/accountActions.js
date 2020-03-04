@@ -23,6 +23,16 @@ const AccountActions = {
         });
       })
       .catch(error => {
+        if (
+          "response" in error &&
+          "data" in error.response &&
+          "message" in error.response.data
+        ) {
+          error = error.response.data.message;
+        } else {
+          error = error.toString();
+        }
+
         Dispatcher.dispatch({
           actionType: "login_failure",
           error: error
@@ -34,6 +44,7 @@ const AccountActions = {
     Dispatcher.dispatch({
       actionType: "registration_started"
     });
+    user["role"] = "TRAVELER";
 
     axios
       .post(`${URL}/api/account/register`, user)
@@ -44,6 +55,16 @@ const AccountActions = {
         });
       })
       .catch(error => {
+        if (
+          "response" in error &&
+          "data" in error.response &&
+          "message" in error.response.data
+        ) {
+          error = error.response.data.message;
+        } else {
+          error = error.toString();
+        }
+
         Dispatcher.dispatch({
           actionType: "registration_failure",
           error: error

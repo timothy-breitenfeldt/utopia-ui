@@ -46,9 +46,7 @@ export default class LoginComponent extends React.Component {
               <div className="card-body">
                 <h5 className="card-title text-center">Sign In</h5>
                 <div className="alert alert-danger" role="alert">
-                  {this.props.accountState.error
-                    ? this.props.accountState.error.response.data.message
-                    : null}
+                  {this.props.accountState.error || null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">

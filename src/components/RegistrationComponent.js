@@ -32,16 +32,15 @@ export default class RegistrationComponent extends React.Component {
   onFormSubmition(event) {
     event.preventDefault();
 
-    if (this.password != this.state.confirm_password) {
-      this.props.accountState.error.response.data.message =
-        "Passwords do not match";
+    if (this.state.password === this.state.confirm_password) {
+      const user = {};
+      Object.assign(user, this.state);
+      delete user.confirm_password;
+      AccountActions.register(user);
+    } else {
+      this.props.accountState.error = "Passwords do not match";
       this.setState({ confirm_password: "", password: "" });
     }
-
-    const user = {};
-    Object.assign(user, this.state);
-    delete user.confirm_password;
-    AccountActions.register(user);
   }
 
   handelFormChange(event) {
@@ -67,9 +66,7 @@ export default class RegistrationComponent extends React.Component {
               <div className="card-body">
                 <h5 className="card-title text-center">Register</h5>
                 <div className="alert alert-danger" role="alert">
-                  {this.props.accountState.error
-                    ? this.props.accountState.error.response.data.message
-                    : null}
+                  {this.props.accountState.error || null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">
@@ -115,11 +112,11 @@ export default class RegistrationComponent extends React.Component {
                   <div className="form-label-group">
                     <label htmlFor="inputBirthday">Birthday</label>
                     <input
-                      type="date"
+                      type="text"
                       id="inputBirthday"
                       className="form-control"
-                      name="bod"
-                      value={this.state.bod}
+                      name="dob"
+                      value={this.state.dob}
                       onChange={this.handelFormChange}
                       required
                     />
