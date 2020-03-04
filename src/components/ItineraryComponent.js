@@ -1,19 +1,23 @@
 'use strict'
 
 import React from 'react';
-import {Link} from '@reach/router';
+import {Link, Router} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryCounterActions from '../actions/ItineraryCounterActions';
-
+import {ItineraryPage} from './ItineraryPage';
 export class ItineraryComponent extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            searchItinerary:{}
+            searchItinerary: {}
         }
+        this.handleClick = this.handleClick.bind(this);
     }
    
+    handleClick(itinerary){
+        this.setState({searchItinerary: itinerary});
+    }
     createItineraryRow(itinerary)
     {
         if(itinerary.agency != null){
@@ -25,7 +29,7 @@ export class ItineraryComponent extends React.Component{
                     <td> {itinerary.date_created} </td>
                     <td> $ {itinerary.price_total} </td>
                     <td> {itinerary.agency.name} </td>
-                    <td> <Link to={`/itinerary/${itinerary.id}`} replace>Settings</Link></td>
+                    <td> <Link to={`/itinerary/${itinerary.id}`} onClick={() => this.handleClick(itinerary)} replace>Settings</Link></td>
                 </tr>
             );
         }
@@ -98,8 +102,11 @@ export class ItineraryComponent extends React.Component{
             <div>
                 <h1>Itinerary</h1>
                 {content}
+                <Router>
+                    <ItineraryPage path="/itinerary/:itinerary_id" itinerary = {this.state.searchItinerary}/>
+                </Router>
             </div>
-        )
+        );
     }
 }
 
