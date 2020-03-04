@@ -4,6 +4,10 @@ import React from "react";
 import Cookie from "js-cookie";
 import { Router, Redirect } from "@reach/router";
 
+import * as accountFactory from "../factories/accountFactory";
+import * as travelerFactory from "../factories/travelerFactory";
+import * as flightFactory from "../factories/flightFactory";
+import * as itineraryFactory from "../factories/itineraryFactory";
 import { Header } from "./header.js";
 import { Home } from "./home.js";
 import { CounterComponent } from "./CounterComponent.js";
@@ -13,7 +17,6 @@ import { FlightPage } from "./FlightPage.js";
 import FlightStore from "../stores/flightStore";
 import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
-import * as accountFactory from "../factories/accountFactory";
 import accountStore from "../stores/accountStore";
 import RegistrationComponent from "./RegistrationComponent";
 
@@ -22,28 +25,9 @@ export class App extends React.Component {
     super(props);
     this.state = {
       accountState: accountFactory.getAccountStateObject(),
-      itinerary: {
-        itineraryList: [],
-        pending: false,
-        success: false,
-        failure: false
-      },
-      traveler: {
-        travelerList: [],
-        readState: {
-          pending: false,
-          success: false,
-          failure: false
-        }
-      },
-      flight: {
-        flightList: [],
-        readState: {
-          pending: false,
-          success: false,
-          failure: false
-        }
-      },
+      itinerary: itineraryFactory.getItineraryStateObject(),
+      traveler: travelerFactory.getTravelerStateObject(),
+      flight: flightFactory.getFlightStateObject(),
       error: ""
     };
   }
@@ -99,6 +83,7 @@ export class App extends React.Component {
           />
         </Router>
 
+        <Header />
         <FlightSearch />
         {content}
       </div>
