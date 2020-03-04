@@ -63,9 +63,7 @@ export default class LoginComponent extends React.Component {
                       name="email"
                       value={this.state.email}
                       onChange={this.handelFormChange}
-                      placeholder="Email address"
                       required
-                      autoFocus
                     />
                   </div>
 
@@ -78,7 +76,6 @@ export default class LoginComponent extends React.Component {
                       name="password"
                       value={this.state.password}
                       onChange={this.handelFormChange}
-                      placeholder="Password"
                       required
                     />
                   </div>

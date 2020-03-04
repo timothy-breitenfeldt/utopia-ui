@@ -4,7 +4,7 @@ import Dispatcher from "../dispatcher/appDispatcher";
 import { EventEmitter } from "events";
 import Cookie from "js-cookie";
 
-import { getLoginStateObject } from "../factories/loginFactory";
+import { getLoginStateObject } from "../factories/accountFactory";
 
 class LoginStore extends EventEmitter {
   constructor(props) {
