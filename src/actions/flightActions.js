@@ -9,15 +9,9 @@ const FlightActions = {
       actionType: 'read_flights_started'
     });
 
-    axios.post(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/flights/search`,
-    {
-      "id":flight.id,
-      "capacity":flight.capacity,
-      "price":flight.price,
-      "arrival_date":flight.arrival_date,
-      "dest_airport":flight.dest_airport,
-      "origin_airport":flight.origin_airport
-    })
+    console.log("flight");
+    console.log(flight);
+    axios.post(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/flights/search`, flight)
     .then( res => {
 
       Dispatcher.dispatch({

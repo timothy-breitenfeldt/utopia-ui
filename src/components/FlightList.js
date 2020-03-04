@@ -1,7 +1,7 @@
 'use strict'
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import FlightStore from '../stores/flightStore';
 import Table from 'react-bootstrap/Table';
 
@@ -93,6 +93,6 @@ export class FlightList extends React.Component{
   }
 }
 
-FlightList.propTypes = {
-  query: PropTypes.object.isRequired
-};
+// FlightList.propTypes = {
+//   query: PropTypes.object.isRequired
+// };
