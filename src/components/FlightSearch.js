@@ -1,6 +1,6 @@
 'use strict'
 
-// import Axios from 'axios';
+
 import React from 'react';
 // import Moment from 'moment';
 import {FlightList} from './FlightList.js';
@@ -71,7 +71,7 @@ export class FlightSearch extends React.Component {
   }
 
   submitSearch(e) {
-    e.preventDefault();    
+    e.preventDefault();
     FlightActions.readFlights(this.state);
   }
 
@@ -179,7 +179,7 @@ export class FlightSearch extends React.Component {
           <Button variant="dark" type="submit" value="Submit">Search</Button>
         </Form>
         <hr></hr>
-        <FlightList query={this.state}/>
+        <FlightList/>
       </div>
     )
   }
