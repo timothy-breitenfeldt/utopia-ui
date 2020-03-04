@@ -76,6 +76,9 @@ export class App extends React.Component {
     }
     return (
       <div>
+        <Header />
+        <FlightSearch />
+        {content}
         <Router>
           <CounterComponent path="/counter" />
           <OnlineComponent path="/online" />
@@ -91,10 +94,6 @@ export class App extends React.Component {
           />
           <ItineraryComponent path="/itineraries" itinerary={this.state.itinerary}/>
         </Router>
-
-        <Header />
-        <FlightSearch />
-        {content}
       </div>
     );
   }
