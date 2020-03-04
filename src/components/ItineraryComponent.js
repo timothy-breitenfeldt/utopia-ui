@@ -10,9 +10,8 @@ export class ItineraryComponent extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            
+            searchItinerary:{}
         }
-        this.handleClick = this.handleClick.bind(this);
     }
    
     createItineraryRow(itinerary)
@@ -26,7 +25,7 @@ export class ItineraryComponent extends React.Component{
                     <td> {itinerary.date_created} </td>
                     <td> $ {itinerary.price_total} </td>
                     <td> {itinerary.agency.name} </td>
-                    <td> <Link to="/itinerary"replace>Settings</Link></td>
+                    <td> <Link to={`/itinerary/${itinerary.id}`} replace>Settings</Link></td>
                 </tr>
             );
         }
@@ -40,7 +39,7 @@ export class ItineraryComponent extends React.Component{
                     <td> {itinerary.date_created} </td>
                     <td> $ {itinerary.price_total} </td>
                     <td></td>
-                    <td> <Link to="/itinerary" replace>Settings</Link></td>
+                    <td> <Link to={`/itinerary/${itinerary.id}`} replace>Settings</Link></td>
                 </tr>
             );
         }
