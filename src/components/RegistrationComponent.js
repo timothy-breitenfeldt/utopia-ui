@@ -38,10 +38,16 @@ export default class RegistrationComponent extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  getError() {
+    return (
+      <div className="alert alert-danger">{this.props.accountState.error}</div>
+    );
+  }
+
   render() {
     let content = null;
 
-    if (this.props.registrationState.accountCreationState.pending) {
+    if (this.props.accountState.registrationState.pending) {
       content = (
         <div className="d-flex justify-content-center">
           <div className="spinner-border" role="status">
@@ -56,12 +62,8 @@ export default class RegistrationComponent extends React.Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h5 className="card-title text-center">Register</h5>
-                <div
-                  className="alert alert-danger"
-                  role="alert"
-                  aria-live="assertive"
-                >
-                  {JSON.stringify(this.props.registrationState.error)}
+                <div aria-live="assertive">
+                  {this.props.accountState.error ? this.getError() : null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">
@@ -241,5 +243,5 @@ export default class RegistrationComponent extends React.Component {
 }
 
 RegistrationComponent.propTypes = {
-  registrationState: PropTypes.object.isRequired
+  accountState: PropTypes.object.isRequired
 };

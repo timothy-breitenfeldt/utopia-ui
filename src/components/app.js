@@ -14,15 +14,14 @@ import FlightStore from "../stores/flightStore";
 import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
 import * as accountFactory from "../factories/accountFactory";
-import loginStore from "../stores/loginStore";
+import accountStore from "../stores/accountStore";
 import RegistrationComponent from "./RegistrationComponent";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginState: accountFactory.getLoginStateObject(),
-      registrationState: accountFactory.getRegistrationStateObject(),
+      accountState: accountFactory.getAccountStateObject(),
       itinerary: {
         itineraryList: [],
         pending: false,
@@ -49,8 +48,8 @@ export class App extends React.Component {
     };
   }
 
-  _onLoggingIn() {
-    this.setState({ loginState: loginStore.loggingIn() });
+  _updateAccountState() {
+    this.setState({ accountState: accountStore.updateAccountState() });
   }
 
   _onFlightChange() {
@@ -58,23 +57,23 @@ export class App extends React.Component {
   }
 
   componentDidMount() {
-    loginStore.addChangeListener(this._onLoggingIn.bind(this));
+    accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
   }
 
   componentWillUnmount() {
-    loginStore.removeChangeListener(this._onLoggingIn.bind(this));
+    accountStore.removeChangeListener(this._updateAccountState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
   }
 
   render() {
     let content = "";
-    if (this.state.loginState.user.role === "COUNTER") {
+    if (this.state.accountState.user.role === "COUNTER") {
       content = <CounterComponent />;
-    } else if (this.state.loginState.user.role === "AGENT") {
+    } else if (this.state.accountState.user.role === "AGENT") {
       content = <AgentComponent />;
-    } else if (this.state.loginState.user.role === "TRAVELER") {
-      alert(JSON.stringify(this.state.loginState.user));
+    } else if (this.state.accountState.user.role === "TRAVELER") {
+      alert(JSON.stringify(this.state.accountState.user));
       alert(Cookie.get("token"));
       content = <OnlineComponent />;
     } else {
@@ -86,14 +85,17 @@ export class App extends React.Component {
       <div>
         <Header />
         <FlightSearch />
-
         {content}
+
         <Router>
           <FlightPage path="/flights/search" flight={this.state.flight} />
-          <LoginComponent path="/account" loginState={this.state.loginState} />
+          <LoginComponent
+            path="/account"
+            accountState={this.state.accountState}
+          />
           <RegistrationComponent
             path="/account/register"
-            registrationState={this.state.registrationState}
+            accountState={this.state.accountState}
           />
         </Router>
       </div>

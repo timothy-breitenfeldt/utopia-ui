@@ -1,6 +1,6 @@
 "use strict";
 
-export function getLoginStateObject() {
+export function getAccountStateObject() {
   return {
     user: {
       email: "",
@@ -15,18 +15,12 @@ export function getLoginStateObject() {
       country: "",
       postal_code: ""
     },
-    authenticationState: {
+    loginState: {
       pending: false,
       failure: false,
       success: false
     },
-    error: ""
-  };
-}
-
-export function getRegistrationStateObject() {
-  return {
-    accountCreationState: {
+    registrationState: {
       pending: false,
       failure: false,
       success: false

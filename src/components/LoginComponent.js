@@ -27,10 +27,18 @@ export default class LoginComponent extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
+  getError() {
+    return (
+      <div className="alert alert-danger">
+        {this.props.accountState.error.message}
+      </div>
+    );
+  }
+
   render() {
     let content = null;
 
-    if (this.props.loginState.authenticationState.pending) {
+    if (this.props.accountState.loginState.pending) {
       content = (
         <div className="d-flex justify-content-center">
           <div className="spinner-border" role="status">
@@ -45,12 +53,8 @@ export default class LoginComponent extends React.Component {
             <div className="card card-signin my-5">
               <div className="card-body">
                 <h5 className="card-title text-center">Sign In</h5>
-                <div
-                  className="alert alert-danger"
-                  role="alert"
-                  aria-live="assertive"
-                >
-                  {JSON.stringify(this.props.loginState.error)}
+                <div aria-live="assertive">
+                  {this.props.accountState.error ? this.getError() : null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">
@@ -98,5 +102,5 @@ export default class LoginComponent extends React.Component {
 }
 
 LoginComponent.propTypes = {
-  loginState: PropTypes.object.isRequired
+  accountState: PropTypes.object.isRequired
 };
