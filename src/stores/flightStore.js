@@ -18,28 +18,27 @@ let _flightStore = {
 class FlightStoreClass extends EventEmitter{
 
     addChangeListener(cb){
-        this.on(CHANGE_EVENT, cb);
+      this.on(CHANGE_EVENT, cb);
     }
 
     removeChangeListener(cb){
-        this.removeListener(CHANGE_EVENT, cb);
+      this.removeListener(CHANGE_EVENT, cb);
     }
 
     emitChange(){
-        this.emit(CHANGE_EVENT);
+      this.emit(CHANGE_EVENT);
     }
 
-
     getAllflights(){
-        return _flightStore.flight;
+      return _flightStore.flight;
     }
 
     resetReadState(){
-        _flightStore.flight.readState = {
-            pending:false,
-            success:false,
-            failure:false
-          }
+      _flightStore.flight.readState = {
+          pending:false,
+          success:false,
+          failure:false
+        }
     }
 }
 

@@ -1,9 +1,17 @@
 'use strict'
 
+// import Axios from 'axios';
 import React from 'react';
 // import Moment from 'moment';
-import Axios from 'axios';
-import {InputGroup, Form, FormControl, Button} from "react-bootstrap";
+import {FlightList} from './FlightList.js';
+import FlightActions from '../actions/flightActions.js';
+
+import {
+  Form,
+  Button,
+  FormControl,
+  InputGroup,
+} from "react-bootstrap";
 
 export class FlightSearch extends React.Component {
 
@@ -17,12 +25,14 @@ export class FlightSearch extends React.Component {
     ],
 
     this.state = {
+
       to         : '',
       from       : '',
       depart     : '',
       return     : '',
       oneWay     : true,
-      passengers : 1
+      passengers : 1,
+
     }
 
     this.toOnChange         = this.toOnChange.bind(this);
@@ -32,26 +42,6 @@ export class FlightSearch extends React.Component {
     this.departOnChange     = this.departOnChange.bind(this);
     this.returnOnChange     = this.returnOnChange.bind(this);
     this.passengersOnChange = this.passengersOnChange.bind(this);
-  }
-
-  componentDidMount() {
-    console.log("MOUNTED");
-    var bodyFormData = new FormData();
-    bodyFormData.set('userName', 'Fred');
-    Axios.post(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/flights/search`,
-      {
-        "capacity": 41,
-        "price": 63.0,
-        "arrival_date": "2019-04-06",
-        "departure_date": "2019-11-06"
-      })
-        .then( res => {
-          let flights = res.data;
-          console.log(flights);
-        })
-        .catch( error => {
-          console.log(error);
-        });
   }
 
   radioOnChange() {
@@ -81,8 +71,8 @@ export class FlightSearch extends React.Component {
   }
 
   submitSearch(e) {
-    console.log(this.state);
-    e.preventDefault();
+    e.preventDefault();    
+    FlightActions.readFlights(this.state);
   }
 
   render() {
@@ -188,6 +178,8 @@ export class FlightSearch extends React.Component {
           {returnDate}
           <Button variant="dark" type="submit" value="Submit">Search</Button>
         </Form>
+        <hr></hr>
+        <FlightList query={this.state}/>
       </div>
     )
   }

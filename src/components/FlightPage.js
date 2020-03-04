@@ -1,7 +1,7 @@
 "use strict"
 import React from 'react';
 import PropType from 'prop-types';
-import FlightActions from '../actions/FlightActions';
+import FlightActions from '../actions/flightActions';
 export class FlightPage extends React.Component{
 
     constructor(props){
@@ -22,7 +22,7 @@ export class FlightPage extends React.Component{
                 price:null,
                 departure_date:null,
                 arrival_date:null
-           } 
+           }
         }
     }
     //handle change events
@@ -42,7 +42,7 @@ export class FlightPage extends React.Component{
         this.setState({searchTarget:{price: event.target.value}});
     }
     //create row
-    createFlightRow(flight){  
+    createFlightRow(flight){
             return (
                 <tr key={flight.id}>
                     <td> {flight.id} </td>
@@ -58,7 +58,7 @@ export class FlightPage extends React.Component{
     componentDidMount(){
         FlightActions.readFlights(this.state.searchTarget);
     }
-    render(){   
+    render(){
          let content = '';
          //LIST OF FLIGHTS
          if(this.props.flight.readState.pending){
@@ -66,7 +66,7 @@ export class FlightPage extends React.Component{
                  <div className="d-flex justify-content-center">
                      <div className="spinner-border" role="status">
                          <span className="sr-only">Loading...</span>
-                     </div> 
+                     </div>
                  </div>
              );
          }
@@ -86,7 +86,7 @@ export class FlightPage extends React.Component{
                     </thead>
                     <tbody>
                         {this.props.flight.flightList.map(this.createFlightRow, this)}
-                    </tbody>    
+                    </tbody>
                 </table>)
         }
         if(this.props.flight.readState.failure){
@@ -138,7 +138,7 @@ export class FlightPage extends React.Component{
                 {searchContent}
                 {content}
             </div>
-        );  
+        );
     }
 
 }
