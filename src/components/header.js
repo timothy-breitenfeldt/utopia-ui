@@ -28,6 +28,11 @@ export const Header = () => {
                 Register
               </Link>
             </li>
+            <li className="list-inline-item">
+              <Link to="/itineraries" replace>
+                Itineraries
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

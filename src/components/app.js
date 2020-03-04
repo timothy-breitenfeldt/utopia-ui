@@ -18,7 +18,9 @@ import FlightStore from "../stores/flightStore";
 import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
+import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
+import { ItineraryComponent } from "./ItineraryComponent";
 
 export class App extends React.Component {
   constructor(props) {
@@ -40,14 +42,20 @@ export class App extends React.Component {
     this.setState({ flight: FlightStore.getAllflights() });
   }
 
+  _onItineraryChange(){
+    this.setState({itinerary: ItineraryStore.getAllitineraries()});
+  }
+
   componentDidMount() {
     accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
+    ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
   }
 
   componentWillUnmount() {
     accountStore.removeChangeListener(this._updateAccountState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
+    ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
   }
 
   render() {
@@ -81,6 +89,7 @@ export class App extends React.Component {
             path="/account/register"
             accountState={this.state.accountState}
           />
+          <ItineraryComponent path="/itineraries" itinerary={this.state.itinerary}/>
         </Router>
 
         <Header />
