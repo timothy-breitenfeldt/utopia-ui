@@ -19,11 +19,13 @@ import FlightStore from "../stores/flightStore";
 import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
+import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItineraryComponent } from "./ItineraryComponent";
 import { ItineraryPage } from "./ItineraryPage";
 import LogoutComponent from "./LogoutComponent";
+import TicketStore from "../stores/ticketStore";
 
 export class App extends React.Component {
   constructor(props) {
@@ -56,16 +58,21 @@ export class App extends React.Component {
     this.setState({ itinerary: ItineraryStore.getAllitineraries() });
   }
 
+  _onTicketChange() {
+    this.setState({ ticket: TicketStore.getAlltickets() });
+  }
   componentDidMount() {
     accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
+    ticketStore.addChangeListener(this._onTicketChange.bind(this));
   }
 
   componentWillUnmount() {
     accountStore.removeChangeListener(this._updateAccountState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
+    ticketStore.removeChangeListener(this._onTicketChange.bind(this));
   }
 
   render() {
