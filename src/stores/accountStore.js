@@ -50,8 +50,35 @@ class AccountStore extends EventEmitter {
     };
   }
 
+  resetLogoutState() {
+    this.store.accountState.redirectToLogin = false;
+    this.store.accountState.logoutState = {
+      success: false
+    };
+  }
+
+  resetUserData() {
+    this.store.accountState.user = {
+      email: "",
+      role: "",
+      first_name: "",
+      last_name: "",
+      dob: "",
+      phone: "",
+      street: "",
+      city: "",
+      state: "",
+      country: "",
+      postal_code: ""
+    };
+  }
+
   setJwt(token) {
     Cookie.set("token", token);
+  }
+
+  removeJwt() {
+    Cookie.remove("token");
   }
 }
 
@@ -94,6 +121,15 @@ Dispatcher.register(action => {
     case "registration_successful":
       accountStore.resetRegistrationState();
       accountStore.store.accountState.registrationState.success = true;
+      accountStore.store.accountState.error = "";
+      accountStore.store.accountState.redirectToLogin = true;
+      accountStore.emitChange();
+      break;
+    case "logout_successful":
+      accountStore.resetLogoutState();
+      accountStore.resetUserData();
+      accountStore.removeJwt();
+      accountStore.store.accountState.logoutState.success = true;
       accountStore.store.accountState.error = "";
       accountStore.store.accountState.redirectToLogin = true;
       accountStore.emitChange();
