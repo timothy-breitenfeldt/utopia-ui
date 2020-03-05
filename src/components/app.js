@@ -8,6 +8,7 @@ import * as accountFactory from "../factories/accountFactory";
 import * as travelerFactory from "../factories/travelerFactory";
 import * as flightFactory from "../factories/flightFactory";
 import * as itineraryFactory from "../factories/itineraryFactory";
+import * as ticketFactory from "../factories/ticketFactory";
 import { Header } from "./header.js";
 import { Home } from "./home.js";
 import { CounterComponent } from "./CounterComponent.js";
@@ -21,19 +22,25 @@ import accountStore from "../stores/accountStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItineraryComponent } from "./ItineraryComponent";
-
+import {ItineraryPage} from "./ItineraryPage";
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      itineraryId: 0,
       accountState: accountFactory.getAccountStateObject(),
       itinerary: itineraryFactory.getItineraryStateObject(),
+      ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject(),
       error: ""
     };
+    this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
   }
 
+  changeSearchItinerary(id){
+    this.setState({itineraryId: id});
+  }
   _updateAccountState() {
     this.setState({ accountState: accountStore.updateAccountState() });
   }
@@ -92,7 +99,8 @@ export class App extends React.Component {
             path="/account/register"
             accountState={this.state.accountState}
           />
-          <ItineraryComponent path="/itineraries" itinerary={this.state.itinerary}/>
+          <ItineraryComponent path="/itineraries" itinerary={this.state.itinerary} updateSearchItinerary={this.changeSearchItinerary} />
+          <ItineraryPage path="/itinerary" itinerary={this.state.itineraryId}/>
         </Router>
       </div>
     );

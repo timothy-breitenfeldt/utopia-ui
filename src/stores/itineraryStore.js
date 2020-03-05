@@ -29,7 +29,6 @@ class ItineraryStoreClass extends EventEmitter{
         this.emit(CHANGE_EVENT);
     }
 
-
     getAllitineraries(){
         return _itineraryStore.itinerary;
     }

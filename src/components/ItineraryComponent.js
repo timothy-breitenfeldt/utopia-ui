@@ -1,22 +1,16 @@
 'use strict'
 
 import React from 'react';
-import {Link, Router} from '@reach/router';
+import {Link} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryCounterActions from '../actions/ItineraryCounterActions';
-import {ItineraryPage} from './ItineraryPage';
 export class ItineraryComponent extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            searchItinerary: {}
+            searchItinerary: 0
         }
-        this.handleClick = this.handleClick.bind(this);
-    }
-   
-    handleClick(itinerary){
-        this.setState({searchItinerary: itinerary});
     }
     createItineraryRow(itinerary)
     {
@@ -29,7 +23,9 @@ export class ItineraryComponent extends React.Component{
                     <td> {itinerary.date_created} </td>
                     <td> $ {itinerary.price_total} </td>
                     <td> {itinerary.agency.name} </td>
-                    <td> <Link to={`/itinerary/${itinerary.id}`} onClick={() => this.handleClick(itinerary)} replace>Settings</Link></td>
+                    <td> 
+                        <Link to={`/itinerary`} onClick={()=>this.props.updateSearchItinerary(itinerary.id)} replace>Settings</Link>
+                    </td>
                 </tr>
             );
         }
@@ -43,7 +39,7 @@ export class ItineraryComponent extends React.Component{
                     <td> {itinerary.date_created} </td>
                     <td> $ {itinerary.price_total} </td>
                     <td></td>
-                    <td> <Link to={`/itinerary/${itinerary.id}`} replace>Settings</Link></td>
+                    <td>   <Link to={`/itinerary`} onClick={()=>this.props.updateSearchItinerary(itinerary.id)} replace>Settings</Link></td>
                 </tr>
             );
         }
@@ -102,14 +98,12 @@ export class ItineraryComponent extends React.Component{
             <div>
                 <h1>Itinerary</h1>
                 {content}
-                <Router>
-                    <ItineraryPage path="/itinerary/:itinerary_id" itinerary = {this.state.searchItinerary}/>
-                </Router>
             </div>
         );
     }
 }
 
 ItineraryComponent.propTypes ={
-    itinerary: PropType.object.isRequired
+    itinerary: PropType.object.isRequired,
+    updateSearchItinerary: PropType.func.isRequired
 }
