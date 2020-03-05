@@ -19,10 +19,12 @@ import FlightStore from "../stores/flightStore";
 import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
+import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import {ItineraryPage} from "./ItineraryPage";
+import TicketStore from "../stores/ticketStore";
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -53,16 +55,21 @@ export class App extends React.Component {
     this.setState({itinerary: ItineraryStore.getAllitineraries()});
   }
 
+  _onTicketChange(){
+    this.setState({ticket: TicketStore.getAlltickets()});
+  }
   componentDidMount() {
     accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
+    ticketStore.addChangeListener(this._onTicketChange.bind(this));
   }
 
   componentWillUnmount() {
     accountStore.removeChangeListener(this._updateAccountState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
+    ticketStore.removeChangeListener(this._onTicketChange.bind(this));
   }
 
   render() {
@@ -100,7 +107,7 @@ export class App extends React.Component {
             accountState={this.state.accountState}
           />
           <ItinerariesComponent path="/itineraries" itinerary={this.state.itinerary} updateSearchItinerary={this.changeSearchItinerary} />
-          <ItineraryPage path={`/itineraries/${this.state.itineraryId}`} itineraryId={this.state.itineraryId}/>
+          <ItineraryPage path={`/itineraries/${this.state.itineraryId}`} itineraryId={this.state.itineraryId} ticket={this.state.ticket}/>
         </Router>
       </div>
     );
