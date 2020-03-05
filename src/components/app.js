@@ -21,7 +21,7 @@ import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
-import { ItineraryComponent } from "./ItineraryComponent";
+import { ItinerariesComponent } from "./ItinerariesComponent";
 import {ItineraryPage} from "./ItineraryPage";
 export class App extends React.Component {
   constructor(props) {
@@ -99,8 +99,8 @@ export class App extends React.Component {
             path="/account/register"
             accountState={this.state.accountState}
           />
-          <ItineraryComponent path="/itineraries" itinerary={this.state.itinerary} updateSearchItinerary={this.changeSearchItinerary} />
-          <ItineraryPage path="/itinerary" itinerary={this.state.itineraryId}/>
+          <ItinerariesComponent path="/itineraries" itinerary={this.state.itinerary} updateSearchItinerary={this.changeSearchItinerary} />
+          <ItineraryPage path={`/itineraries/${this.state.itineraryId}`} itineraryId={this.state.itineraryId}/>
         </Router>
       </div>
     );

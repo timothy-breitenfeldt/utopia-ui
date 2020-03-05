@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export class ItineraryPage extends React.Component{
 
     componentDidMount(){
-        console.log(this.props.itinerary);
+        console.log(this.props.itineraryId);
     }
     render(){
         return( <p>Oh?!</p>);
@@ -13,5 +13,5 @@ export class ItineraryPage extends React.Component{
 }
 
 ItineraryPage.propTypes={
-    itinerary: PropTypes.number.isRequired
+    itineraryId: PropTypes.number.isRequired
 }

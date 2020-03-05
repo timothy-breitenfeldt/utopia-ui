@@ -4,14 +4,8 @@ import React from 'react';
 import {Link} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryCounterActions from '../actions/ItineraryCounterActions';
-export class ItineraryComponent extends React.Component{
+export class ItinerariesComponent extends React.Component{
 
-    constructor(props){
-        super(props);
-        this.state = {
-            searchItinerary: 0
-        }
-    }
     createItineraryRow(itinerary)
     {
         if(itinerary.agency != null){
@@ -24,7 +18,7 @@ export class ItineraryComponent extends React.Component{
                     <td> $ {itinerary.price_total} </td>
                     <td> {itinerary.agency.name} </td>
                     <td> 
-                        <Link to={`/itinerary`} onClick={()=>this.props.updateSearchItinerary(itinerary.id)} replace>Settings</Link>
+                        <Link to={`/itineraries/${itinerary.id}`} onClick={()=>this.props.updateSearchItinerary(itinerary.id)} replace>Settings</Link>
                     </td>
                 </tr>
             );
@@ -39,7 +33,7 @@ export class ItineraryComponent extends React.Component{
                     <td> {itinerary.date_created} </td>
                     <td> $ {itinerary.price_total} </td>
                     <td></td>
-                    <td>   <Link to={`/itinerary`} onClick={()=>this.props.updateSearchItinerary(itinerary.id)} replace>Settings</Link></td>
+                    <td>   <Link to={`/itineraries/${itinerary.id}`} onClick={()=>this.props.updateSearchItinerary(itinerary.id)} replace>Settings</Link></td>
                 </tr>
             );
         }
@@ -103,7 +97,7 @@ export class ItineraryComponent extends React.Component{
     }
 }
 
-ItineraryComponent.propTypes ={
+ItinerariesComponent.propTypes ={
     itinerary: PropType.object.isRequired,
     updateSearchItinerary: PropType.func.isRequired
 }
