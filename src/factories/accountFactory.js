@@ -26,6 +26,9 @@ export function getAccountStateObject() {
       failure: false,
       success: false
     },
+    logoutState: {
+      success: false
+    },
     error: ""
   };
 }
