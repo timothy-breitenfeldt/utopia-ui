@@ -41,10 +41,10 @@ export class App extends React.Component {
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
   }
 
-  changeSearchItinerary(id){
-    const temp = {...this.state.itinerary};
+  changeSearchItinerary(id) {
+    const temp = { ...this.state.itinerary };
     temp.itineraryId = id;
-    this.setState({itinerary: temp});
+    this.setState({ itinerary: temp });
   }
 
   _updateAccountState() {
@@ -77,18 +77,16 @@ export class App extends React.Component {
   }
 
   render() {
-    let content = null;
-
     if (this.state.accountState.redirectToLogin) {
-      navigate("account", { replace: true });
+      navigate("/account", { replace: true });
     } else if (this.state.accountState.user.role === "COUNTER") {
-      navigate("counter", { replace: true });
+      navigate("/counter", { replace: true });
     } else if (this.state.accountState.user.role === "AGENT") {
-      navigate("agent", { replace: true });
+      navigate("/agent", { replace: true });
     } else if (this.state.accountState.user.role === "TRAVELER") {
       alert(JSON.stringify(this.state.accountState.user));
       alert(Cookie.get("token"));
-      navigate("online", { replace: true });
+      navigate("/online", { replace: true });
     } else {
       navigate("/");
     }
@@ -97,7 +95,7 @@ export class App extends React.Component {
       <div>
         <Header />
         <FlightSearch />
-        {content}
+
         <Router>
           <Home path="/" />
           <CounterComponent path="/counter" />
@@ -117,11 +115,11 @@ export class App extends React.Component {
             itinerary={this.state.itinerary}
             updateSearchItinerary={this.changeSearchItinerary}
           />
-           <ItineraryPage 
-           path={`/itineraries/${this.state.itinerary.itineraryId}`} 
-           itineraryId={this.state.itinerary.itineraryId} 
-           ticket={this.state.ticket}
-           />
+          <ItineraryPage
+            path={`/itineraries/${this.state.itinerary.itineraryId}`}
+            itineraryId={this.state.itinerary.itineraryId}
+            ticket={this.state.ticket}
+          />
           <LogoutComponent
             path="/account/logout"
             accountState={this.state.accountState}
