@@ -33,6 +33,12 @@ export const Header = () => {
                 Itineraries
               </Link>
             </li>
+
+            <li className="list-inline-item">
+              <Link to="/account/logout" replace>
+                logout
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>

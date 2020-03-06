@@ -2,7 +2,7 @@
 
 import React from "react";
 import Cookie from "js-cookie";
-import { Router, Redirect } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 
 import * as accountFactory from "../factories/accountFactory";
 import * as travelerFactory from "../factories/travelerFactory";
@@ -22,9 +22,11 @@ import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
-import { ItinerariesComponent } from "./ItinerariesComponent";
-import {ItineraryPage} from "./ItineraryPage";
+import { ItinerariesComponent } from "./ItineraryComponent";
+import { ItineraryPage } from "./ItineraryPage";
+import LogoutComponent from "./LogoutComponent";
 import TicketStore from "../stores/ticketStore";
+
 export class App extends React.Component {
   constructor(props) {
     super(props);
@@ -44,6 +46,7 @@ export class App extends React.Component {
     temp.itineraryId = id;
     this.setState({itinerary: temp});
   }
+
   _updateAccountState() {
     this.setState({ accountState: accountStore.updateAccountState() });
   }
@@ -52,12 +55,12 @@ export class App extends React.Component {
     this.setState({ flight: FlightStore.getAllflights() });
   }
 
-  _onItineraryChange(){
-    this.setState({itinerary: ItineraryStore.getAllitineraries()});
+  _onItineraryChange() {
+    this.setState({ itinerary: ItineraryStore.getAllitineraries() });
   }
 
-  _onTicketChange(){
-    this.setState({ticket: TicketStore.getAlltickets()});
+  _onTicketChange() {
+    this.setState({ ticket: TicketStore.getAlltickets() });
   }
   componentDidMount() {
     accountStore.addChangeListener(this._updateAccountState.bind(this));
@@ -74,27 +77,29 @@ export class App extends React.Component {
   }
 
   render() {
-    let content = "";
+    let content = null;
 
     if (this.state.accountState.redirectToLogin) {
-      content = <Redirect to="/account" />;
+      navigate("account", { replace: true });
     } else if (this.state.accountState.user.role === "COUNTER") {
-      content = <Redirect to="/counter" />;
+      navigate("counter", { replace: true });
     } else if (this.state.accountState.user.role === "AGENT") {
-      content = <Redirect to="/agent" />;
+      navigate("agent", { replace: true });
     } else if (this.state.accountState.user.role === "TRAVELER") {
       alert(JSON.stringify(this.state.accountState.user));
       alert(Cookie.get("token"));
-      content = <Redirect to="/online" />;
+      navigate("online", { replace: true });
     } else {
-      content = <Home />;
+      navigate("/");
     }
+
     return (
       <div>
         <Header />
         <FlightSearch />
         {content}
         <Router>
+          <Home path="/" />
           <CounterComponent path="/counter" />
           <OnlineComponent path="/online" />
           <AgentComponent path="/agent" />
@@ -107,8 +112,20 @@ export class App extends React.Component {
             path="/account/register"
             accountState={this.state.accountState}
           />
-          <ItinerariesComponent path="/itineraries" itinerary={this.state.itinerary} updateSearchItinerary={this.changeSearchItinerary} />
-          <ItineraryPage path={`/itineraries/${this.state.itinerary.itineraryId}`} itineraryId={this.state.itinerary.itineraryId} ticket={this.state.ticket}/>
+          <ItinerariesComponent
+            path="/itineraries"
+            itinerary={this.state.itinerary}
+            updateSearchItinerary={this.changeSearchItinerary}
+          />
+           <ItineraryPage 
+           path={`/itineraries/${this.state.itinerary.itineraryId}`} 
+           itineraryId={this.state.itinerary.itineraryId} 
+           ticket={this.state.ticket}
+           />
+          <LogoutComponent
+            path="/account/logout"
+            accountState={this.state.accountState}
+          />
         </Router>
       </div>
     );

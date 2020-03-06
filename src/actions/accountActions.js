@@ -70,6 +70,12 @@ const AccountActions = {
           error: error
         });
       });
+  },
+
+  logout() {
+    Dispatcher.dispatch({
+      actionType: "logout_successful"
+    });
   }
 };
 
