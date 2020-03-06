@@ -22,7 +22,7 @@ import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
-import { ItinerariesComponent } from "./ItineraryComponent";
+import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
 import LogoutComponent from "./LogoutComponent";
 import TicketStore from "../stores/ticketStore";
