@@ -29,7 +29,6 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itineraryId: 0,
       accountState: accountFactory.getAccountStateObject(),
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
@@ -41,7 +40,9 @@ export class App extends React.Component {
   }
 
   changeSearchItinerary(id){
-    this.setState({itineraryId: id});
+    const temp = {...this.state.itinerary};
+    temp.itineraryId = id;
+    this.setState({itinerary: temp});
   }
   _updateAccountState() {
     this.setState({ accountState: accountStore.updateAccountState() });
@@ -107,7 +108,7 @@ export class App extends React.Component {
             accountState={this.state.accountState}
           />
           <ItinerariesComponent path="/itineraries" itinerary={this.state.itinerary} updateSearchItinerary={this.changeSearchItinerary} />
-          <ItineraryPage path={`/itineraries/${this.state.itineraryId}`} itineraryId={this.state.itineraryId} ticket={this.state.ticket}/>
+          <ItineraryPage path={`/itineraries/${this.state.itinerary.itineraryId}`} itineraryId={this.state.itinerary.itineraryId} ticket={this.state.ticket}/>
         </Router>
       </div>
     );
