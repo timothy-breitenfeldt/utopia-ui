@@ -30,7 +30,6 @@ export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      itineraryId: 0,
       account: accountFactory.getAccountStateObject(),
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
@@ -42,7 +41,9 @@ export class App extends React.Component {
   }
 
   changeSearchItinerary(id) {
-    this.setState({ itineraryId: id });
+    const temp = { ...this.state.itinerary };
+    temp.itineraryId = id;
+    this.setState({ itinerary: temp });
   }
 
   _updateaccount() {
@@ -76,15 +77,15 @@ export class App extends React.Component {
 
   render() {
     if (this.state.account.redirectToLogin) {
-      navigate("account", { replace: true });
+      navigate("/account", { replace: true });
     } else if (this.state.account.user.role === "COUNTER") {
-      navigate("counter", { replace: true });
+      navigate("/counter", { replace: true });
     } else if (this.state.account.user.role === "AGENT") {
-      navigate("agent", { replace: true });
+      navigate("/agent", { replace: true });
     } else if (this.state.account.user.role === "TRAVELER") {
-      alert(JSON.stringify(this.state.account.user));
+      alert(JSON.stringify(this.state.accountState.user));
       alert(Cookie.get("token"));
-      navigate("online", { replace: true });
+      navigate("/online", { replace: true });
     } else {
       navigate("/");
     }
@@ -115,8 +116,9 @@ export class App extends React.Component {
             updateSearchItinerary={this.changeSearchItinerary}
           />
           <ItineraryPage
-            path={`/itineraries/${this.state.itineraryId}`}
-            itineraryId={this.state.itineraryId}
+            path={`/itineraries/${this.state.itinerary.itineraryId}`}
+            ticket={this.state.ticket}
+            itineraryId={this.state.itinerary.itineraryId}
           />
         </Router>
       </div>
