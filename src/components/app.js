@@ -83,7 +83,7 @@ export class App extends React.Component {
     } else if (this.state.account.user.role === "AGENT") {
       navigate("/agent", { replace: true });
     } else if (this.state.account.user.role === "TRAVELER") {
-      alert(JSON.stringify(this.state.accountState.user));
+      alert(JSON.stringify(this.state.account.user));
       alert(Cookie.get("token"));
       navigate("/online", { replace: true });
     } else {
