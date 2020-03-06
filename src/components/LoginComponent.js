@@ -30,7 +30,7 @@ export default class LoginComponent extends React.Component {
   render() {
     let content = null;
 
-    if (this.props.accountState.loginState.pending) {
+    if (this.props.account.loginState.pending) {
       content = (
         <div className="d-flex justify-content-center">
           <div className="spinner-border" role="alert">
@@ -46,7 +46,7 @@ export default class LoginComponent extends React.Component {
               <div className="card-body">
                 <h5 className="card-title text-center">Sign In</h5>
                 <div className="alert alert-danger" role="alert">
-                  {this.props.accountState.error || null}
+                  {this.props.account.error || null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">
@@ -94,5 +94,5 @@ export default class LoginComponent extends React.Component {
 }
 
 LoginComponent.propTypes = {
-  accountState: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired
 };

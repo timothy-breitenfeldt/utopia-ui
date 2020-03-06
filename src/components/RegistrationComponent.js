@@ -38,7 +38,7 @@ export default class RegistrationComponent extends React.Component {
       delete user.confirm_password;
       AccountActions.register(user);
     } else {
-      this.props.accountState.error = "Passwords do not match";
+      this.props.account.error = "Passwords do not match";
       this.setState({ confirm_password: "", password: "" });
     }
   }
@@ -50,7 +50,7 @@ export default class RegistrationComponent extends React.Component {
   render() {
     let content = null;
 
-    if (this.props.accountState.registrationState.pending) {
+    if (this.props.account.registrationState.pending) {
       content = (
         <div className="d-flex justify-content-center">
           <div className="spinner-border" role="alert">
@@ -66,7 +66,7 @@ export default class RegistrationComponent extends React.Component {
               <div className="card-body">
                 <h5 className="card-title text-center">Register</h5>
                 <div className="alert alert-danger" role="alert">
-                  {this.props.accountState.error || null}
+                  {this.props.account.error || null}
                 </div>
 
                 <form onSubmit={this.onFormSubmition} className="form-signin">
@@ -246,5 +246,5 @@ export default class RegistrationComponent extends React.Component {
 }
 
 RegistrationComponent.propTypes = {
-  accountState: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired
 };

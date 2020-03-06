@@ -22,17 +22,16 @@ import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
-import { ItineraryComponent } from "./ItineraryComponent";
+import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
 import LogoutComponent from "./LogoutComponent";
-import TicketStore from "../stores/ticketStore";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       itineraryId: 0,
-      accountState: accountFactory.getAccountStateObject(),
+      account: accountFactory.getAccountStateObject(),
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
@@ -46,8 +45,8 @@ export class App extends React.Component {
     this.setState({ itineraryId: id });
   }
 
-  _updateAccountState() {
-    this.setState({ accountState: accountStore.updateAccountState() });
+  _updateaccount() {
+    this.setState({ account: accountStore.updateaccount() });
   }
 
   _onFlightChange() {
@@ -59,33 +58,31 @@ export class App extends React.Component {
   }
 
   _onTicketChange() {
-    this.setState({ ticket: TicketStore.getAlltickets() });
+    this.setState({ ticket: ticketStore.getAlltickets() });
   }
   componentDidMount() {
-    accountStore.addChangeListener(this._updateAccountState.bind(this));
+    accountStore.addChangeListener(this._updateaccount.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
     ticketStore.addChangeListener(this._onTicketChange.bind(this));
   }
 
   componentWillUnmount() {
-    accountStore.removeChangeListener(this._updateAccountState.bind(this));
+    accountStore.removeChangeListener(this._updateaccount.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
     ticketStore.removeChangeListener(this._onTicketChange.bind(this));
   }
 
   render() {
-    let content = null;
-
-    if (this.state.accountState.redirectToLogin) {
+    if (this.state.account.redirectToLogin) {
       navigate("account", { replace: true });
-    } else if (this.state.accountState.user.role === "COUNTER") {
+    } else if (this.state.account.user.role === "COUNTER") {
       navigate("counter", { replace: true });
-    } else if (this.state.accountState.user.role === "AGENT") {
+    } else if (this.state.account.user.role === "AGENT") {
       navigate("agent", { replace: true });
-    } else if (this.state.accountState.user.role === "TRAVELER") {
-      alert(JSON.stringify(this.state.accountState.user));
+    } else if (this.state.account.user.role === "TRAVELER") {
+      alert(JSON.stringify(this.state.account.user));
       alert(Cookie.get("token"));
       navigate("online", { replace: true });
     } else {
@@ -103,13 +100,14 @@ export class App extends React.Component {
           <OnlineComponent path="/online" />
           <AgentComponent path="/agent" />
           <FlightPage path="/flights/search" flight={this.state.flight} />
-          <LoginComponent
-            path="/account"
-            accountState={this.state.accountState}
-          />
+          <LoginComponent path="/account" account={this.state.account} />
           <RegistrationComponent
             path="/account/register"
-            accountState={this.state.accountState}
+            account={this.state.account}
+          />
+          <LogoutComponent
+            path="/account/logout"
+            account={this.state.account}
           />
           <ItinerariesComponent
             path="/itineraries"
@@ -119,10 +117,6 @@ export class App extends React.Component {
           <ItineraryPage
             path={`/itineraries/${this.state.itineraryId}`}
             itineraryId={this.state.itineraryId}
-          />
-          <LogoutComponent
-            path="/account/logout"
-            accountState={this.state.accountState}
           />
         </Router>
       </div>

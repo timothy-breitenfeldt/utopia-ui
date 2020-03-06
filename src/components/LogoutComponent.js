@@ -26,5 +26,5 @@ export default class LogoutComponent extends React.Component {
 }
 
 LogoutComponent.propTypes = {
-  accountState: PropTypes.object.isRequired
+  account: PropTypes.object.isRequired
 };
