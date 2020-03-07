@@ -1,22 +1,17 @@
 "use strict";
 
 import React from "react";
-import Cookie from "js-cookie";
-import { Router, navigate } from "@reach/router";
+import { Router } from "@reach/router";
 
 import * as accountFactory from "../factories/accountFactory";
 import * as travelerFactory from "../factories/travelerFactory";
 import * as flightFactory from "../factories/flightFactory";
 import * as itineraryFactory from "../factories/itineraryFactory";
 import * as ticketFactory from "../factories/ticketFactory";
-import { Header } from "./header.js";
-import { Home } from "./home.js";
-import { CounterComponent } from "./CounterComponent.js";
-import { AgentComponent } from "./AgentComponent.js";
-import { OnlineComponent } from "./OnlineComponent.js";
+import NavigationBar from "./NavigationBar";
+import Home from "./home.js";
 import { FlightPage } from "./FlightPage.js";
 import FlightStore from "../stores/flightStore";
-import { FlightSearch } from "./FlightSearch.js";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
@@ -46,8 +41,8 @@ export class App extends React.Component {
     this.setState({ itinerary: temp });
   }
 
-  _updateaccount() {
-    this.setState({ account: accountStore.updateaccount() });
+  _updateAccountState() {
+    this.setState({ account: accountStore.updateAccountState() });
   }
 
   _onFlightChange() {
@@ -61,46 +56,71 @@ export class App extends React.Component {
   _onTicketChange() {
     this.setState({ ticket: ticketStore.getAlltickets() });
   }
+
   componentDidMount() {
-    accountStore.addChangeListener(this._updateaccount.bind(this));
+    accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
     ticketStore.addChangeListener(this._onTicketChange.bind(this));
   }
 
   componentWillUnmount() {
-    accountStore.removeChangeListener(this._updateaccount.bind(this));
+    accountStore.removeChangeListener(this._updateAccountState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
     ticketStore.removeChangeListener(this._onTicketChange.bind(this));
   }
 
   render() {
-    if (this.state.account.redirectToLogin) {
-      navigate("/account", { replace: true });
-    } else if (this.state.account.user.role === "COUNTER") {
-      navigate("/counter", { replace: true });
-    } else if (this.state.account.user.role === "AGENT") {
-      navigate("/agent", { replace: true });
-    } else if (this.state.account.user.role === "TRAVELER") {
-      alert(JSON.stringify(this.state.account.user));
-      alert(Cookie.get("token"));
-      navigate("/online", { replace: true });
+    let links = null;
+    let headerText = null;
+    let message = null;
+    const user = this.state.account.user;
+
+    if (this.state.account.user.role == "COUNTER") {
+      links = {
+        Home: "/",
+        Logout: "/account/logout",
+        Itineraries: "/itineraries"
+      };
+      headerText = `Welcome ${user.first_name} ${user.last_name}`;
+      message = "Counter Agent";
+    } else if (this.state.account.user.role == "AGENT") {
+      links = {
+        Home: "/",
+        Logout: "/account/logout",
+        Itineraries: "/itineraries"
+      };
+      headerText = `Welcome ${user.first_name} ${user.last_name}`;
+      message = "Travel Agent";
+    } else if (this.state.account.user.role == "TRAVELER") {
+      links = {
+        Home: "/",
+        Logout: "/account/logout",
+        Itineraries: "/itineraries"
+      };
+      headerText = `Welcome ${user.first_name} ${user.last_name}`;
+      message = "Online User";
     } else {
-      navigate("/");
+      links = {
+        Home: "/",
+        Login: "/account",
+        Register: "/account/register"
+      };
+      headerText = "Welcome";
     }
 
     return (
       <div>
-        <Header />
-        <FlightSearch />
+        <header>
+          <div className="page-header">
+            <h1>Utopia Airline Reservation System</h1>
+          </div>
+          <NavigationBar links={links} />
+        </header>
 
         <Router>
-          <Home path="/" />
-          <CounterComponent path="/counter" />
-          <OnlineComponent path="/online" />
-          <AgentComponent path="/agent" />
-          <FlightPage path="/flights/search" flight={this.state.flight} />
+          <Home path="/" headerText={headerText} message={message} />
           <LoginComponent path="/account" account={this.state.account} />
           <RegistrationComponent
             path="/account/register"
@@ -110,6 +130,7 @@ export class App extends React.Component {
             path="/account/logout"
             account={this.state.account}
           />
+          <FlightPage path="/flights/search" flight={this.state.flight} />
           <ItinerariesComponent
             path="/itineraries"
             itinerary={this.state.itinerary}

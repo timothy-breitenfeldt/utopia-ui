@@ -3,6 +3,7 @@
 import Dispatcher from "../dispatcher/appDispatcher";
 import { EventEmitter } from "events";
 import Cookie from "js-cookie";
+import { navigate } from "@reach/router";
 
 import * as accountFactory from "../factories/accountFactory";
 
@@ -28,12 +29,11 @@ class AccountStore extends EventEmitter {
     this.emit(this.CHANGE_EVENT);
   }
 
-  updateaccount() {
+  updateAccountState() {
     return this.store.account;
   }
 
   resetLoginState() {
-    this.store.account.redirectToLogin = false;
     this.store.account.loginState = {
       pending: false,
       success: false,
@@ -42,7 +42,6 @@ class AccountStore extends EventEmitter {
   }
 
   resetRegistrationState() {
-    this.store.account.redirectToLogin = false;
     this.store.account.registrationState = {
       pending: false,
       success: false,
@@ -51,7 +50,6 @@ class AccountStore extends EventEmitter {
   }
 
   resetLogoutState() {
-    this.store.account.redirectToLogin = false;
     this.store.account.logoutState = {
       success: false
     };
@@ -104,6 +102,7 @@ Dispatcher.register(action => {
       accountStore.store.account.error = "";
       accountStore.store.account.user = action.data.user;
       accountStore.setJwt(action.data.token);
+      navigate("/");
       accountStore.emitChange();
       break;
     case "registration_started":
@@ -122,8 +121,8 @@ Dispatcher.register(action => {
       accountStore.resetRegistrationState();
       accountStore.store.account.registrationState.success = true;
       accountStore.store.account.error = "";
-      accountStore.store.account.redirectToLogin = true;
       accountStore.emitChange();
+      navigate("/account");
       break;
     case "logout_successful":
       accountStore.resetLogoutState();
@@ -131,7 +130,7 @@ Dispatcher.register(action => {
       accountStore.removeJwt();
       accountStore.store.account.logoutState.success = true;
       accountStore.store.account.error = "";
-      accountStore.store.account.redirectToLogin = true;
+      navigate("/account");
       accountStore.emitChange();
       break;
   }
