@@ -7,6 +7,7 @@ export function getTicketStateObject() {
       pending: false,
       success: false,
       failure: false
-    }
+    },
+    error: ""
   };
 }

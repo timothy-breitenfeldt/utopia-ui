@@ -29,8 +29,7 @@ export class App extends React.Component {
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
-      flight: flightFactory.getFlightStateObject(),
-      error: ""
+      flight: flightFactory.getFlightStateObject()
     };
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
   }

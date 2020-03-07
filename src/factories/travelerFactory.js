@@ -7,6 +7,7 @@ export function getTravelerStateObject() {
       pending: false,
       success: false,
       failure: false
-    }
+    },
+    error: ""
   };
 }

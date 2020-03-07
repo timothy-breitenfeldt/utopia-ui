@@ -7,6 +7,7 @@ export function getFlightStateObject() {
       pending: false,
       success: false,
       failure: false
-    }
+    },
+    error: ""
   };
 }
