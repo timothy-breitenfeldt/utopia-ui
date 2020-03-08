@@ -6,7 +6,7 @@ const TicketActions = {
         Dispatcher.dispatch({
             actionType: 'read_tickets_started'
         });
-        axios.get(`http://localhost:8081/api/counter/itineraries/${id}/tickets`)
+        axios.get(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/itineraries/${id}/tickets`)
         .then( res => {
             Dispatcher.dispatch({
                 actionType: 'read_tickets_successful',
