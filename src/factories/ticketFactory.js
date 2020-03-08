@@ -11,3 +11,11 @@ export function getTicketStateObject() {
     error: ""
   };
 }
+
+export function getTicketObject() {
+  return {
+    seat_number: "",
+    flight_number: 0,
+    price: 0
+  };
+}

@@ -12,3 +12,12 @@ export function getItineraryStateObject() {
     error: ""
   };
 }
+
+export function getItineraryObject() {
+  return {
+    user_id: 0,
+    agency_id: 0,
+    traveler_id: 0,
+    tickets: []
+  };
+}
