@@ -4,6 +4,8 @@ import React from "react";
 import Proptypes from "prop-types";
 
 import * as travelerFactory from "../factories/travelerFactory";
+import BookingAction from "../actions/bookingActions";
+import BookingActions from "../actions/bookingActions";
 
 export default class BookingComponent extends React.Component {
   constructor(props) {
@@ -17,16 +19,19 @@ export default class BookingComponent extends React.Component {
       this.state.travelers.push(travelerFactory.getTravelerObject());
     }
 
-    this.onFormSubmition = this.onFormSubmition.bind(this);
-    this.handelFormChange = this.handelFormChange.bind(this);
+    this.onFormSubmition = this.onTravelerFormSubmition.bind(this);
+    this.handelFormChange = this.handelTravelerFormChange.bind(this);
   }
 
-  onFormSubmition(event) {
+  onTravelerFormSubmition(event) {
     event.preventDefault();
+    BookingActions.createTravelers(this.state.travelers);
   }
 
-  handelFormChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+  handelTravelerFormChange(event) {
+    const newTravelers = { ...this.state.travelers };
+    newTravelers[event.target.index][event.target.name] = event.target.value;
+    this.setState({ travelers: newTravelers });
   }
 
   createTravelerFields(index) {
@@ -42,7 +47,7 @@ export default class BookingComponent extends React.Component {
             name="first_name"
             value={this.state.travelers[index].first_name}
             index={index}
-            onChange={this.handelFormChange}
+            onChange={this.handelTravelerFormChange}
             required
           />
         </div>
@@ -56,7 +61,7 @@ export default class BookingComponent extends React.Component {
             name="last_name"
             value={this.state.travelers[index].last_name}
             index={index}
-            onChange={this.handelFormChange}
+            onChange={this.handelTravelerFormChange}
             required
           />
         </div>
@@ -70,7 +75,7 @@ export default class BookingComponent extends React.Component {
             name="email"
             value={this.state.travelers[index].email}
             index={index}
-            onChange={this.handelFormChange}
+            onChange={this.handelTravelerFormChange}
             required
           />
         </div>
@@ -84,7 +89,7 @@ export default class BookingComponent extends React.Component {
             name="phone"
             value={this.state.travelers[index].phone}
             index={index}
-            onChange={this.handelFormChange}
+            onChange={this.handelTravelerFormChange}
             required
           />
         </div>
@@ -103,6 +108,9 @@ export default class BookingComponent extends React.Component {
           </div>
         </div>
       );
+    } else if (this.props.booking.travelerState.successful) {
+      //Get seat number.
+      content = null;
     } else {
       content = (
         <div className="row">
@@ -114,7 +122,7 @@ export default class BookingComponent extends React.Component {
                   {this.props.account.error || null}
                 </div>
 
-                <form onSubmit={this.onFormSubmition} className="form">
+                <form onSubmit={this.onTravelerFormSubmition} className="form">
                   {this.state.travelers.map(
                     (v, i) => this.createTravelerFields(i),
                     this
