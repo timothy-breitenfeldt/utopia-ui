@@ -19,7 +19,10 @@ import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
+import { ItinerariesTravelerPage } from "./ItinerariesTravelerPage"
+import {TravelerComponent} from "./TravelerComponent";
 import LogoutComponent from "./LogoutComponent";
+import TravelerStore from "../stores/travelerStore";
 
 export class App extends React.Component {
   constructor(props) {
@@ -32,12 +35,19 @@ export class App extends React.Component {
       flight: flightFactory.getFlightStateObject()
     };
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
   }
 
   changeSearchItinerary(id) {
     const temp = { ...this.state.itinerary };
     temp.itineraryId = id;
     this.setState({ itinerary: temp });
+  }
+  changeSearchTravelerItinerary(id){
+    console.log(id);
+    const temp = {...this.state.traveler};
+    temp.travelerId = id;
+    this.setState({ traveler: temp});
   }
 
   _updateAccountState() {
@@ -55,12 +65,17 @@ export class App extends React.Component {
   _onTicketChange() {
     this.setState({ ticket: ticketStore.getAlltickets() });
   }
+  
+  _onTravelerChange(){
+    this.setState({traveler: TravelerStore.getAlltravelers()});
+  }
 
   componentDidMount() {
     accountStore.addChangeListener(this._updateAccountState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
     ticketStore.addChangeListener(this._onTicketChange.bind(this));
+    TravelerStore.addChangeListener(this._onTravelerChange.bind(this));
   }
 
   componentWillUnmount() {
@@ -68,6 +83,7 @@ export class App extends React.Component {
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
     ticketStore.removeChangeListener(this._onTicketChange.bind(this));
+    TravelerStore.removeChangeListener(this._onTravelerChange.bind(this));
   }
 
   render() {
@@ -80,7 +96,8 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Logout: "/account/logout",
-        Itineraries: "/itineraries"
+        Itineraries: "/itineraries",
+        Traveler: "/travelers"
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
       message = "Counter Agent";
@@ -133,6 +150,7 @@ export class App extends React.Component {
           <ItinerariesComponent
             path="/itineraries"
             itinerary={this.state.itinerary}
+            account={this.state.account}
             updateSearchItinerary={this.changeSearchItinerary}
           />
           <ItineraryPage
@@ -140,6 +158,18 @@ export class App extends React.Component {
             ticket={this.state.ticket}
             itineraryId={this.state.itinerary.itineraryId}
           />
+          <TravelerComponent
+            path="/travelers"
+            traveler={this.state.traveler}
+            changeSearchTravelerItinerary={this.changeSearchTravelerItinerary}
+          />
+          <ItinerariesTravelerPage
+            path={`/itineraries/travelers/${this.state.traveler.travelerId}`}
+            itinerary={this.state.itinerary}
+            travelerId={this.state.traveler.travelerId}
+            updateSearchItinerary={this.changeSearchItinerary}
+          />
+          
         </Router>
       </div>
     );

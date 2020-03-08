@@ -4,7 +4,7 @@ import React from 'react';
 import {Link} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryActions from '../actions/ItineraryActions';
-export class ItinerariesComponent extends React.Component{
+export class ItinerariesTravelerPage extends React.Component{
 
     createItineraryRow(itinerary)
     {
@@ -41,13 +41,8 @@ export class ItinerariesComponent extends React.Component{
 
     componentDidMount()
     {
-        if(this.props.account.user.role === "COUNTER") {
-            ItineraryActions.readItinerariesCounter();
-        } else if(this.props.account.user.role === "ONLINE"){
-            ItineraryActions.readItinerariesOnline();
-        } else if(this.props.account.user.role === "AGENT"){
-            ItineraryActions.readItinerariesAgent();
-        }
+        console.log()
+        ItineraryActions.readTravelersItineraries(this.props.travelerId);
     }
     render(){
         let content = '';
@@ -103,8 +98,8 @@ export class ItinerariesComponent extends React.Component{
     }
 }
 
-ItinerariesComponent.propTypes ={
+ItinerariesTravelerPage.propTypes ={
     itinerary: PropType.object.isRequired,
     updateSearchItinerary: PropType.func.isRequired,
-    account: PropType.object.isRequired
+    travelerId: PropType.number.isRequired
 }
