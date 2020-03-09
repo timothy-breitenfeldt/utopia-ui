@@ -1,11 +1,24 @@
 'use strict'
 import React from 'react';
 import PropTypes from 'prop-types';
+import ItineraryActions from '../actions/ItineraryActions';
 import TicketActions from '../actions/ticketActions';
+import Table from 'react-bootstrap/Table'
+import { Button, ButtonToolbar} from 'react-bootstrap';
+import { navigate } from '@reach/router';
 export class ItineraryPage extends React.Component{
 
+    constructor(props){
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+    handleClick(){
+        ItineraryActions.deleteItinerary(this.props.itineraryId);
+        navigate("/itineraries/update");
+    }
     componentDidMount(){
         TicketActions.readTicketsByItineraryId(this.props.itineraryId);
+        
     }
     createTicketRow(ticket){
         return (
@@ -36,7 +49,7 @@ export class ItineraryPage extends React.Component{
         if(this.props.ticket.readState.success)
         {
             content = (
-                <table className="table">
+                <Table striped border hover size="md">
                     <thead>
                         <tr>
                             <th>Ticket</th>
@@ -52,7 +65,7 @@ export class ItineraryPage extends React.Component{
                     <tbody>
                         {this.props.ticket.ticketList.map(this.createTicketRow, this)}
                     </tbody>
-                </table>
+                </Table>
             );
         }
 
@@ -65,7 +78,16 @@ export class ItineraryPage extends React.Component{
                 </div>
             );
         }
-        return content;
+        
+        return(
+            <div>
+                <h1> Itinerary #{this.props.itineraryId}</h1>
+                <ButtonToolbar>
+                    <Button variant="outline-danger" onClick={this.handleClick}> Cancel Plan </Button>
+                </ButtonToolbar>
+                {content}
+            </div>
+        );
     }
 }
 

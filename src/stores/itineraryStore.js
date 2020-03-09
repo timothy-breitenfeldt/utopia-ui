@@ -1,5 +1,6 @@
 import Dispatcher from '../dispatcher/appDispatcher';
 import {EventEmitter} from 'events';
+import { navigate } from "@reach/router";
 
 const CHANGE_EVENT = 'change';
 
@@ -77,6 +78,11 @@ Dispatcher.register( (action) => {
         case 'add_itineraries_failure':
             ItineraryStore.resetReadState();
             _itineraryStore.itinerary.readState.failure = true;
+            ItineraryStore.emitChange();
+            break;
+        case 'delete_itineraries_succesful':
+            ItineraryStore.resetReadState();
+            navigate("/itineraries/update");
             ItineraryStore.emitChange();
             break;
         default:
