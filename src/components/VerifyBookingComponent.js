@@ -50,15 +50,11 @@ export default class VerifyBookingComponent extends React.Component {
     );
   }
 
-  async onBookItineraries(event) {
-    const travelers = await BookingActions.createTravelers(this.props.booking.travelers);
-
-    //Copy traveler_id into itineraries
-    for (int i = 0; i < travelers.length; i++) {
-        this.props.booking.itineraries[i].traveler_id = travelers[i].traveler_id;
-    }
-
-    BookingActions.createItineraries(this.props.booking.itineraries);
+  onBookItineraries(event) {
+    BookingActions.bookItineraries(
+      this.state.booking.travelers,
+      this.state.booking.itineraries
+    );
   }
 
   render() {
@@ -73,12 +69,12 @@ export default class VerifyBookingComponent extends React.Component {
         </div>
       );
     } else if (this.props.booking.bookingState.success) {
-        content = (
-            <div>
-                <h3>Successfully Booked!</h3>
-                <p>Check your email for a copy of your itinerary.</p>
-            </div>
-        );
+      content = (
+        <div>
+          <h3>Successfully Booked!</h3>
+          <p>Check your email for a copy of your itinerary.</p>
+        </div>
+      );
     } else {
       content = (
         <div>
@@ -87,10 +83,10 @@ export default class VerifyBookingComponent extends React.Component {
             Please verify your information below. If anything is incorrect,
             please go back and correct your information now.
           </p>
-          
-                        <div className="alert alert-danger" role="alert">
-                {this.props.booking.error || null}
-              </div>
+
+          <div className="alert alert-danger" role="alert">
+            {this.props.booking.error || null}
+          </div>
 
           {this.props.booking.itineraries.map((itinerary, i) =>
             this.showItinerary(itinerary, this.props.booking.travelers[i])
