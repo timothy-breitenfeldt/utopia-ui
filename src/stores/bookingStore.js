@@ -5,7 +5,7 @@ import { EventEmitter } from "events";
 
 import * as bookingFactory from "../factories/bookingFactory";
 
-class AccountStore extends EventEmitter {
+class BookingStore extends EventEmitter {
   constructor(props) {
     super(props);
     this.CHANGE_EVENT = "change";
@@ -53,7 +53,7 @@ Dispatcher.register(action => {
     case "booking_travelers_successful":
       bookingStore.resetTravelersState();
       bookingStore.store.booking.travelerState.success = true;
-
+      bookingStore.store.booking.travelers = action.data;
       bookingStore.emitChange();
       break;
     case "booking_travelers_failure":

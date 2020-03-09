@@ -14,7 +14,7 @@ export default class NavigationBar extends React.Component {
 
     for (const [name, path] of Object.entries(this.props.links)) {
       links.push(
-        <li className="list-inline-item">
+        <li key={name} className="list-inline-item">
           <Link to={path} replace>
             {name}
           </Link>

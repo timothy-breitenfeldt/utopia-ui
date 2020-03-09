@@ -2,6 +2,8 @@
 
 import Dispatcher from "../dispatcher/appDispatcher";
 import axios from "axios";
+import Promise from "es6-promise";
+
 import config from "../config";
 
 const URL = config.url;
@@ -13,35 +15,40 @@ const BookingActions = {
     });
 
     const promises = [];
-    const travelerIds = [];
 
+    //Get traveler IDs
+    //Iterate through travelers and attempt to insert, if fails, asume due to email constraint and make request to get traveler by email
     travelers.map(function(traveler) {
-      const createTravelerPromise = axios.post(
-        `${url}/api/counter/travelers`,
-        traveler
-      );
-      promises.push(createTravelerPromise);
+      const promise = new Promise(function(resolve, reject) {
+        axios
+          .post(`${URL}/api/counter/travelers`, traveler)
+          .then(result => {
+            traveler.id = result.data;
+            return resolve();
+          })
+          .catch(() => {
+            axios
+              .post(`${URL}/api/counter/travelers/search`, {
+                email: traveler.email
+              })
+              .then(result => {
+                traveler.id = result.data[0].id;
+                return resolve();
+              })
+              .catch(error => {
+                return reject(error);
+              });
+          });
+      });
 
-      createTravelerPromise
-        .then(result => travelerIds.push(result.id))
-        .catch(error => {
-          const getTravelerPromise = axios.post(
-            `${url}/api/counter/travelers/search`,
-            {
-              email: traveler.email
-            }
-          );
-          promises.push(getTravelerPromise);
-
-          getTravelerPromise.then(result => travelerIds.push(result.id));
-        });
+      promises.push(promise);
     });
 
     Promise.all(promises)
-      .then(function(result) {
+      .then(function() {
         Dispatcher.dispatch({
           actionType: "booking_travelers_successful",
-          data: travelerIds
+          data: travelers
         });
       })
       .catch(function(error) {

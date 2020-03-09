@@ -28,5 +28,5 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
   headerText: PropTypes.string.isRequired,
-  message: PropTypes.string.isRequired
+  message: PropTypes.string
 };

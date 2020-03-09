@@ -4,23 +4,22 @@ import React from "react";
 import Proptypes from "prop-types";
 
 import * as travelerFactory from "../factories/travelerFactory";
-import BookingAction from "../actions/bookingActions";
 import BookingActions from "../actions/bookingActions";
 
 export default class BookingComponent extends React.Component {
   constructor(props) {
     super(props);
-    thisstate = {
-      itineraries: [],
-      travelers: []
+    this.state = {
+      itineraries: props.booking.itineraries,
+      travelers: props.booking.travelers
     };
 
     for (let i = 0; i < props.numberOfTravelers; i++) {
       this.state.travelers.push(travelerFactory.getTravelerObject());
     }
 
-    this.onFormSubmition = this.onTravelerFormSubmition.bind(this);
-    this.handelFormChange = this.handelTravelerFormChange.bind(this);
+    this.onTravelerFormSubmition = this.onTravelerFormSubmition.bind(this);
+    this.handelTravelerFormChange = this.handelTravelerFormChange.bind(this);
   }
 
   onTravelerFormSubmition(event) {
@@ -28,15 +27,16 @@ export default class BookingComponent extends React.Component {
     BookingActions.createTravelers(this.state.travelers);
   }
 
-  handelTravelerFormChange(event) {
-    const newTravelers = { ...this.state.travelers };
-    newTravelers[event.target.index][event.target.name] = event.target.value;
+  handelTravelerFormChange(event, index) {
+    let newTravelers = [];
+    Object.assign(newTravelers, this.state.travelers);
+    newTravelers[index][event.target.name] = event.target.value;
     this.setState({ travelers: newTravelers });
   }
 
   createTravelerFields(index) {
     return (
-      <div>
+      <div key={`travelerFields${index}`}>
         <h5>Traveler {index + 1}</h5>
         <div className="form-label-group">
           <label htmlFor={`inputFirstName${index}`}>First Name</label>
@@ -46,8 +46,7 @@ export default class BookingComponent extends React.Component {
             className="form-control"
             name="first_name"
             value={this.state.travelers[index].first_name}
-            index={index}
-            onChange={this.handelTravelerFormChange}
+            onChange={event => this.handelTravelerFormChange(event, index)}
             required
           />
         </div>
@@ -60,8 +59,7 @@ export default class BookingComponent extends React.Component {
             className="form-control"
             name="last_name"
             value={this.state.travelers[index].last_name}
-            index={index}
-            onChange={this.handelTravelerFormChange}
+            onChange={event => this.handelTravelerFormChange(event, index)}
             required
           />
         </div>
@@ -74,8 +72,7 @@ export default class BookingComponent extends React.Component {
             className="form-control"
             name="email"
             value={this.state.travelers[index].email}
-            index={index}
-            onChange={this.handelTravelerFormChange}
+            onChange={event => this.handelTravelerFormChange(event, index)}
             required
           />
         </div>
@@ -88,8 +85,7 @@ export default class BookingComponent extends React.Component {
             className="form-control"
             name="phone"
             value={this.state.travelers[index].phone}
-            index={index}
-            onChange={this.handelTravelerFormChange}
+            onChange={event => this.handelTravelerFormChange(event, index)}
             required
           />
         </div>
@@ -108,9 +104,6 @@ export default class BookingComponent extends React.Component {
           </div>
         </div>
       );
-    } else if (this.props.booking.travelerState.successful) {
-      //Get seat number.
-      content = null;
     } else {
       content = (
         <div className="row">
@@ -119,7 +112,7 @@ export default class BookingComponent extends React.Component {
               <div className="card-body">
                 <h4 className="card-title text-center">Travelers</h4>
                 <div className="alert alert-danger" role="alert">
-                  {this.props.account.error || null}
+                  {this.props.booking.error || null}
                 </div>
 
                 <form onSubmit={this.onTravelerFormSubmition} className="form">

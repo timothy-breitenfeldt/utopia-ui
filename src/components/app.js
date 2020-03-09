@@ -8,6 +8,8 @@ import * as travelerFactory from "../factories/travelerFactory";
 import * as flightFactory from "../factories/flightFactory";
 import * as itineraryFactory from "../factories/itineraryFactory";
 import * as ticketFactory from "../factories/ticketFactory";
+import * as bookingFactory from "../factories/bookingFactory";
+import BookingComponent from "./BookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
 import { FlightPage } from "./FlightPage.js";
@@ -19,23 +21,27 @@ import ItineraryStore from "../stores/itineraryStore";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
-import { ItinerariesTravelerPage } from "./ItinerariesTravelerPage"
-import {TravelerComponent} from "./TravelerComponent";
+import { ItinerariesTravelerPage } from "./ItinerariesTravelerPage";
+import { TravelerComponent } from "./TravelerComponent";
 import LogoutComponent from "./LogoutComponent";
 import TravelerStore from "../stores/travelerStore";
+import bookingStore from "../stores/bookingStore";
 
 export class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       account: accountFactory.getAccountStateObject(),
+      booking: bookingFactory.getBookingStateObject(),
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject()
     };
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
-    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
+      this
+    );
   }
 
   changeSearchItinerary(id) {
@@ -43,15 +49,20 @@ export class App extends React.Component {
     temp.itineraryId = id;
     this.setState({ itinerary: temp });
   }
-  changeSearchTravelerItinerary(id){
+
+  changeSearchTravelerItinerary(id) {
     console.log(id);
-    const temp = {...this.state.traveler};
+    const temp = { ...this.state.traveler };
     temp.travelerId = id;
-    this.setState({ traveler: temp});
+    this.setState({ traveler: temp });
   }
 
   _updateAccountState() {
     this.setState({ account: accountStore.updateAccountState() });
+  }
+
+  _updateBookingState() {
+    this.setState({ booking: bookingStore.updateBookingState() });
   }
 
   _onFlightChange() {
@@ -65,13 +76,14 @@ export class App extends React.Component {
   _onTicketChange() {
     this.setState({ ticket: ticketStore.getAlltickets() });
   }
-  
-  _onTravelerChange(){
-    this.setState({traveler: TravelerStore.getAlltravelers()});
+
+  _onTravelerChange() {
+    this.setState({ traveler: TravelerStore.getAlltravelers() });
   }
 
   componentDidMount() {
     accountStore.addChangeListener(this._updateAccountState.bind(this));
+    bookingStore.addChangeListener(this._updateBookingState.bind(this));
     FlightStore.addChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.addChangeListener(this._onItineraryChange.bind(this));
     ticketStore.addChangeListener(this._onTicketChange.bind(this));
@@ -114,6 +126,7 @@ export class App extends React.Component {
         Home: "/",
         Logout: "/account/logout",
         Itineraries: "/itineraries"
+        Booking: "/booking"
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
       message = "Online User";
@@ -121,7 +134,8 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Login: "/account",
-        Register: "/account/register"
+        Register: "/account/register",
+        Booking: "/booking"
       };
       headerText = "Welcome";
     }
@@ -169,7 +183,13 @@ export class App extends React.Component {
             travelerId={this.state.traveler.travelerId}
             updateSearchItinerary={this.changeSearchItinerary}
           />
-          
+          <BookingComponent
+            path="/booking"
+            user={this.state.account.user}
+            booking={this.state.booking}
+            numberOfTravelers={1}
+            flights={[]}
+          />
         </Router>
       </div>
     );
