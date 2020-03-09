@@ -142,12 +142,12 @@ export class App extends React.Component {
     return (
       <div>
         <header>
-          <div className="page-header">
+          <div className="titleClass">
             <h1>Utopia Airline Reservation System</h1>
           </div>
           <NavigationBar links={links} />
         </header>
-
+        
         <Router>
           <Home path="/" headerText={headerText} message={message} />
           <LoginComponent path="/account" account={this.state.account} />

@@ -1,6 +1,7 @@
 {
   "parser": "babel-eslint",
-  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["css-modules"],
+  "extends": ["eslint:recommended", "plugin:react/recommended","plugin:css-modules/recommended"],
   "root": true,
   "parserOptions": {
     "ecmaFeatures": {

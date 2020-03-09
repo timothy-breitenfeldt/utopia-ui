@@ -49,7 +49,7 @@ export class ItineraryPage extends React.Component{
         if(this.props.ticket.readState.success)
         {
             content = (
-                <Table striped border hover size="md">
+                <Table striped bordered hover size="md">
                     <thead>
                         <tr>
                             <th>Ticket</th>

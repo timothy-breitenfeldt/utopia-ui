@@ -67,8 +67,8 @@ export class FlightSearch extends React.Component {
 
   submitSearch() {
     event.preventDefault();
-    console.log(this.state);
-    FlightActions.readFlights(this.state);
+    console.log(this.state.flight);
+    FlightActions.readFlights(this.state.flight);
   }
 
   render() {
