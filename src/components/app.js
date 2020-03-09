@@ -125,7 +125,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Logout: "/account/logout",
-        Itineraries: "/itineraries"
+        Itineraries: "/itineraries",
         Booking: "/booking"
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
