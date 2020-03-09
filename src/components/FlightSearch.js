@@ -3,6 +3,7 @@
 
 import React from 'react';
 // import Moment from 'moment';
+import PropTypes from 'prop-types';
 import {FlightList} from './FlightList.js';
 import FlightActions from '../actions/flightActions.js';
 
@@ -26,22 +27,24 @@ export class FlightSearch extends React.Component {
 
     this.state = {
 
-      to         : '',
-      from       : '',
-      depart     : '',
-      return     : '',
-      oneWay     : true,
-      passengers : 1,
+      flight: {
 
+        destination_airport : { name: "" },
+        origin_airport      : { name: "" },
+        departure_date      : '',
+        return_date         : '',
+        passengers          : 1,
+        oneWay              : true,
+
+      }
     }
 
-    this.toOnChange         = this.toOnChange.bind(this);
-    this.fromOnChange       = this.fromOnChange.bind(this);
     this.submitSearch       = this.submitSearch.bind(this);
     this.radioOnChange      = this.radioOnChange.bind(this);
-    this.departOnChange     = this.departOnChange.bind(this);
-    this.returnOnChange     = this.returnOnChange.bind(this);
-    this.passengersOnChange = this.passengersOnChange.bind(this);
+    this.handleDestChange   = this.handleDestChange.bind(this);
+    this.handleFormChange   = this.handleFormChange.bind(this);
+    this.handleOriginChange = this.handleOriginChange.bind(this);
+
   }
 
   radioOnChange() {
@@ -50,28 +53,21 @@ export class FlightSearch extends React.Component {
     }));
   }
 
-  passengersOnChange(e) {
-    this.setState({ passengers: e.target.value });
+  handleOriginChange() {
+    this.setState({ origin_airport: { name: event.target.value} })
   }
 
-  fromOnChange(e) {
-    this.setState({ from: e.target.value });
+  handleDestChange() {
+    this.setState({ destination_airport: { name: event.target.value} })
   }
 
-  toOnChange(e) {
-    this.setState({ to: e.target.value });
+  handleFormChange() {
+    this.setState({ [event.target.name]: event.target.value });
   }
 
-  departOnChange(e) {
-    this.setState({ depart: e.target.value });
-  }
-
-  returnOnChange(e) {
-    this.setState({ return: e.target.value });
-  }
-
-  submitSearch(e) {
-    e.preventDefault();
+  submitSearch() {
+    event.preventDefault();
+    console.log(this.state);
     FlightActions.readFlights(this.state);
   }
 
@@ -87,10 +83,11 @@ export class FlightSearch extends React.Component {
               <InputGroup.Text id="return-label" style={{width: '115px'}}>Return</InputGroup.Text>
             </InputGroup.Prepend>
             <FormControl
+              name="return_date"
               placeholder="YYYY-MM-DD"
               aria-label="Return"
               aria-describedby="return-label"
-              onChange={this.returnOnChange}
+              onChange={this.handleFormChange}
             />
           </InputGroup>
         </Form.Row>
@@ -127,7 +124,7 @@ export class FlightSearch extends React.Component {
               <InputGroup.Prepend>
                 <InputGroup.Text id="passengers-label" style={{width: '115px'}}>Passengers</InputGroup.Text>
               </InputGroup.Prepend>
-              <Form.Control as="select" onChange={this.passengersOnChange}>
+              <Form.Control as="select" name="passengers" onChange={this.handleFormChange}>
                 <option>1</option>
                 <option>2</option>
                 <option>3</option>
@@ -139,13 +136,14 @@ export class FlightSearch extends React.Component {
           <Form.Row>
             <InputGroup className="mb-3">
               <InputGroup.Prepend>
-                <InputGroup.Text id="from-label" style={{width: '115px'}}>From</InputGroup.Text>
+                <InputGroup.Text id="origin_airport-label" style={{width: '115px'}}>From</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
+                name="origin_airport"
                 placeholder="City or airport code"
                 aria-label="From"
-                aria-describedby="from-label"
-                onChange={this.fromOnChange}
+                aria-describedby="origin_airport-label"
+                onChange={this.handleOriginChange}
               />
             </InputGroup>
           </Form.Row>
@@ -155,10 +153,11 @@ export class FlightSearch extends React.Component {
                 <InputGroup.Text id="to-label" style={{width: '115px'}}>To</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
+                name="destination_airport"
                 placeholder="City or airport code"
                 aria-label="To"
                 aria-describedby="to-label"
-                onChange={this.toOnChange}
+                onChange={this.handleDestChange}
               />
             </InputGroup>
           </Form.Row>
@@ -168,10 +167,11 @@ export class FlightSearch extends React.Component {
                 <InputGroup.Text id="depart-label" style={{width: '115px'}}>Depart</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
+                name="departure_date"
                 placeholder="YYYY-MM-DD"
                 aria-label="Depart"
                 aria-describedby="depart-label"
-                onChange={this.departOnChange}
+                onChange={this.handleFormChange}
               />
             </InputGroup>
           </Form.Row>
@@ -179,8 +179,12 @@ export class FlightSearch extends React.Component {
           <Button variant="dark" type="submit" value="Submit">Search</Button>
         </Form>
         <hr></hr>
-        <FlightList/>
+        <FlightList handleFlightSelect={this.props.handleFlightSelect}/>
       </div>
     )
   }
 }
+
+FlightSearch.propTypes = {
+  handleFlightSelect: PropTypes.func.isRequired
+};
