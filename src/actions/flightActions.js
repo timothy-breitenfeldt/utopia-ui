@@ -9,8 +9,6 @@ const FlightActions = {
       actionType: 'read_flights_started'
     });
 
-    console.log("flight");
-    console.log(flight);
     axios.post(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/flights/search`, flight)
     .then( res => {
 

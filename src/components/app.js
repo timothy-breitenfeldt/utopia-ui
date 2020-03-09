@@ -1,7 +1,7 @@
 "use strict";
 
 import React from "react";
-import { Router } from "@reach/router";
+import { Router, navigate } from "@reach/router";
 
 import * as accountFactory from "../factories/accountFactory";
 import * as travelerFactory from "../factories/travelerFactory";
@@ -12,7 +12,6 @@ import * as bookingFactory from "../factories/bookingFactory";
 import BookingComponent from "./BookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
-import { FlightPage } from "./FlightPage.js";
 import FlightStore from "../stores/flightStore";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
@@ -39,16 +38,18 @@ export class App extends React.Component {
       flight: flightFactory.getFlightStateObject(),
       selectedFlights: []
     };
+
+    this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
-    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
-      this
-    );
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
+
   }
 
   handleFlightSelect(flight){
     let flightList = this.state.selectedFlights;
     flightList.push(flight);
-    this.setState({ selectedFlights: flightList })
+    this.setState({ selectedFlights: flightList });
+    navigate("/booking")
   }
 
   changeSearchItinerary(id) {
@@ -157,7 +158,12 @@ export class App extends React.Component {
         </header>
 
         <Router>
-          <Home path="/" headerText={headerText} message={message} />
+          <Home
+            path="/"
+            headerText={headerText}
+            message={message}
+            handleFlightSelect={this.handleFlightSelect}
+          />
           <LoginComponent path="/account" account={this.state.account} />
           <RegistrationComponent
             path="/account/register"
@@ -167,7 +173,6 @@ export class App extends React.Component {
             path="/account/logout"
             account={this.state.account}
           />
-          <FlightPage path="/flights/search" flight={this.state.flight} />
           <ItinerariesComponent
             path="/itineraries"
             itinerary={this.state.itinerary}
