@@ -3,7 +3,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { FlightSearch } from "./FlightSearch";
+import FlightSearch from "./FlightSearch";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -19,7 +19,7 @@ export default class Home extends React.Component {
         </div>
 
         <div className="container">
-          <FlightSearch />
+          <FlightSearch handleFlightSelect={this.props.handleFlightSelect}/>
         </div>
       </div>
     );
@@ -27,6 +27,7 @@ export default class Home extends React.Component {
 }
 
 Home.propTypes = {
+  handleFlightSelect: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   message: PropTypes.string
 };

@@ -1,10 +1,9 @@
 'use strict'
 
-
 import React from 'react';
 // import Moment from 'moment';
 import PropTypes from 'prop-types';
-import {FlightList} from './FlightList.js';
+import FlightList from './FlightList.js';
 import FlightActions from '../actions/flightActions.js';
 
 import {
@@ -14,16 +13,11 @@ import {
   InputGroup,
 } from "react-bootstrap";
 
-export class FlightSearch extends React.Component {
+export default class FlightSearch extends React.Component {
 
   constructor(props) {
-    super(props)
 
-    this.airports = [
-      'IAD',
-      'DCA',
-      'BWI'
-    ],
+    super(props);
 
     this.state = {
 
@@ -49,7 +43,9 @@ export class FlightSearch extends React.Component {
 
   radioOnChange() {
     this.setState( prevState => ({
-      oneWay: !prevState.oneWay
+      flight: {
+        oneWay: !prevState.flight.oneWay
+      }
     }));
   }
 
@@ -67,15 +63,15 @@ export class FlightSearch extends React.Component {
 
   submitSearch() {
     event.preventDefault();
-    console.log(this.state.flight);
-    FlightActions.readFlights(this.state.flight);
+    FlightActions.readFlights(this.state);
   }
 
   render() {
 
     let returnDate = '';
 
-    if( !this.state.oneWay ){
+    if( this.state.flight.oneWay == false ){
+
       returnDate = (
         <Form.Row>
           <InputGroup className="mb-3">
@@ -103,17 +99,17 @@ export class FlightSearch extends React.Component {
           <hr></hr>
           <Form.Row>
             <Form.Check
-              inline checked={this.state['oneWay']}
+              inline checked={this.state.flight.oneWay}
+              style={{paddingLeft: "10px"}}
               label="One way"
               name="one-way-radio"
               type="radio"
               id="one-way-radio"
-              style={{paddingLeft: "10px"}}
               onChange={this.radioOnChange}/>
             <Form.Check
-              inline checked={!this.state['oneWay']}
+              inline checked={!this.state.flight.oneWay}
               label="Round trip"
-              name="round-trip-radio"
+              name="one-way-radio"
               type="radio"
               id="round-trip-radio"
               onChange={this.radioOnChange}/>

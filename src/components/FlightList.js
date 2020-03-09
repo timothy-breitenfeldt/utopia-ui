@@ -1,17 +1,20 @@
 'use strict'
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import FlightStore from '../stores/flightStore';
-import Table from 'react-bootstrap/Table';
+import { Button, Table } from 'react-bootstrap';
 
-export class FlightList extends React.Component{
+export default class FlightList extends React.Component{
 
   constructor(props) {
 
     super(props)
+
     this.state = {
+
       flight:{
+
         flightList: [],
         readState:{
             pending:false,
@@ -19,8 +22,15 @@ export class FlightList extends React.Component{
             failure:false
         },
         error: ''
+
       }
     }
+
+    this.handleFlightSelect = this.handleFlightSelect.bind(this);
+  }
+
+  handleFlightSelect(flight){
+    this.props.handleFlightSelect(flight);
   }
 
   createFlightRow(flight){
@@ -31,6 +41,9 @@ export class FlightList extends React.Component{
         <td style={{textAlign: 'center'}}>{flight.departure_date}</td>
         <td style={{textAlign: 'center'}}>{flight.dest_airport.name}</td>
         <td style={{textAlign: 'center'}}>{flight.arrival_date}</td>
+        <td>
+          <Button variant="dark" onClick={ () => this.handleFlightSelect(flight) }>Select</Button>
+        </td>
       </tr>
     );
   }
@@ -93,6 +106,6 @@ export class FlightList extends React.Component{
   }
 }
 
-// FlightList.propTypes = {
-//   query: PropTypes.object.isRequired
-// };
+FlightList.propTypes = {
+  handleFlightSelect: PropTypes.func.isRequired
+};
