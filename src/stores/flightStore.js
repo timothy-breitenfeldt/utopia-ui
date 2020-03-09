@@ -49,6 +49,8 @@ Dispatcher.register( (action) => {
     switch (action.actionType){
         case 'read_flights_successful':
             FlightStore.resetReadState();
+            console.log("FLIGHTSTORE");
+            console.log(action.data);
             _flightStore.flight.flightList = action.data;
             _flightStore.flight.readState.success = true;
             FlightStore.emitChange();

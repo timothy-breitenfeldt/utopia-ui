@@ -25,8 +25,8 @@ export default class FlightSearch extends React.Component {
 
         destination_airport : { name: "" },
         origin_airport      : { name: "" },
-        departure_date      : '',
-        return_date         : '',
+        departure_date      : null,
+        return_date         : null,
         passengers          : 1,
         oneWay              : true,
 
@@ -36,7 +36,7 @@ export default class FlightSearch extends React.Component {
     this.submitSearch       = this.submitSearch.bind(this);
     this.radioOnChange      = this.radioOnChange.bind(this);
     this.handleDestChange   = this.handleDestChange.bind(this);
-    this.handleFormChange   = this.handleFormChange.bind(this);
+    this.handleReturnChange = this.handleReturnChange.bind(this);
     this.handleOriginChange = this.handleOriginChange.bind(this);
 
   }
@@ -44,25 +44,44 @@ export default class FlightSearch extends React.Component {
   radioOnChange() {
     this.setState( prevState => ({
       flight: {
+        ...this.state.flight,
         oneWay: !prevState.flight.oneWay
       }
     }));
   }
 
   handleOriginChange() {
-    this.setState({ origin_airport: { name: event.target.value} })
+    this.setState({
+      flight: {
+        ...this.state.flight,
+        origin_airport: { name: event.target.value}
+      }
+    })
   }
 
   handleDestChange() {
-    this.setState({ destination_airport: { name: event.target.value} })
+    this.setState({
+      flight: {
+        ...this.state.flight,
+        destination_airport: { name: event.target.value }
+      }
+    })
   }
 
-  handleFormChange() {
-    this.setState({ [event.target.name]: event.target.value });
+  handleReturnChange() {
+    this.setState({
+      flight: {
+        ...this.state.flight,
+        return_date: event.target.value
+      }
+    })
   }
+
 
   submitSearch() {
     event.preventDefault();
+    console.log("SUBMITTING SEARCH");
+    console.log(this.state.flight);
     FlightActions.readFlights(this.state);
   }
 
@@ -83,7 +102,7 @@ export default class FlightSearch extends React.Component {
               placeholder="YYYY-MM-DD"
               aria-label="Return"
               aria-describedby="return-label"
-              onChange={this.handleFormChange}
+              onChange={this.handleReturnChange}
             />
           </InputGroup>
         </Form.Row>
