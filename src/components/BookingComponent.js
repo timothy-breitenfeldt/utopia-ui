@@ -1,11 +1,10 @@
 "use strict";
 
-import { navigate, Match } from "@reach/router";
+import { navigate } from "@reach/router";
 import React from "react";
 import Proptypes from "prop-types";
 
 import * as travelerFactory from "../factories/travelerFactory";
-import BookingActions from "../actions/bookingActions";
 
 export default class BookingComponent extends React.Component {
   constructor(props) {
@@ -26,7 +25,7 @@ export default class BookingComponent extends React.Component {
       });
 
       for (let flight of props.flights) {
-        const number = Math.floor(Math.random() * flight.capasity) + 1;
+        const number = Math.floor(Math.random() * flight.capacity) + 1;
         const letter = "abc"[Math.floor(Math.random() * 3)];
         this.state.itineraries[itinerariesLength - 1].price_total +=
           flight.price;

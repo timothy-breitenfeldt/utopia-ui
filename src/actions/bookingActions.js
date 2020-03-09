@@ -11,23 +11,27 @@ const URL = config.url;
 const HEADERS = { Authorization: `Bearer ${Cookie.get("token")}` };
 
 const BookingActions = {
-  async bookItineraries(travelers, itineraries) {
-        const travelers = await this._createTravelers(travelers);
+  bookItineraries(travelers, itineraries) {
+    Dispatcher.dispatch({
+      actionType: "booking_started"
+    });
+
+    const travelersResult = this._createTravelers(travelers).then(function(
+      result
+    ) {
+      alert("result: " + JSON.stringify(result));
+    });
 
     //Copy traveler_id into itineraries and delete price_total
-    for (int i = 0; i < travelers.length; i++) {
-        this.props.booking.itineraries[i].traveler_id = travelers[i].traveler_id;
-        delete this.props.booking.itineraries[i].price_total;
+    for (let i = 0; i < travelers.length; i++) {
+      itineraries[i].traveler_id = travelersResult[i].traveler_id;
+      delete itineraries[i].price_total;
     }
 
     this._createItineraries(itineraries);
   },
 
   _createTravelers(travelers) {
-    Dispatcher.dispatch({
-      actionType: "booking_started"
-    });
-
     const promises = [];
 
     //Get traveler IDs
@@ -35,20 +39,16 @@ const BookingActions = {
     travelers.map(function(traveler) {
       const promise = new Promise(function(resolve, reject) {
         axios
-          .post(`${URL}/api/counter/travelers`, traveler, { headers: HEADERS })
+          .post(`${URL}/api/counter/travelers`, traveler)
           .then(result => {
             traveler.id = result.data;
             return resolve();
           })
           .catch(() => {
             axios
-              .post(
-                `${URL}/api/counter/travelers/search`,
-                {
-                  email: traveler.email
-                },
-                { headers: HEADERS }
-              )
+              .post(`${URL}/api/counter/travelers/search`, {
+                email: traveler.email
+              })
               .then(result => {
                 traveler.id = result.data[0].id;
                 return resolve();
@@ -62,13 +62,17 @@ const BookingActions = {
       promises.push(promise);
     });
 
-    return Promise.all(promises).catch(function(error) {
-      console.log(error);
-      Dispatcher.dispatch({
-        actionType: "booking_failure",
-        error: error.toString()
+    return Promise.all(promises)
+      .then(function(result) {
+        alert(JSON.stringify(result));
+      })
+      .catch(function(error) {
+        console.log(error);
+        Dispatcher.dispatch({
+          actionType: "booking_failure",
+          error: error.toString()
+        });
       });
-    });
   },
 
   _createItineraries(itineraries) {

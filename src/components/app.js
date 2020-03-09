@@ -39,10 +39,39 @@ export class App extends React.Component {
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject()
     };
+
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
     this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
       this
     );
+
+    this.flights = [
+      {
+        id: 1,
+        capacity: 43,
+        price: 63.0,
+        arrival_date: "2019-04-06",
+        departure_date: "2019-11-06",
+        dest_airport: {
+          id: 13,
+          name: "Ollie",
+          street: "Flade",
+          country: "Indonesia",
+          state: null,
+          city: "Setonokalong",
+          postal_code: null
+        },
+        origin_airport: {
+          id: 24,
+          name: "Ambrose",
+          street: "Daltrey",
+          country: "Portugal",
+          state: "├ëvora",
+          city: "Cabrela",
+          postal_code: "7050-405"
+        }
+      }
+    ];
   }
 
   changeSearchItinerary(id) {
@@ -135,7 +164,8 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Login: "/account",
-        Register: "/account/register"
+        Register: "/account/register",
+        booking: "/booking"
       };
       headerText = "Welcome";
     }
@@ -188,12 +218,12 @@ export class App extends React.Component {
             user={this.state.account.user}
             booking={this.state.booking}
             numberOfTravelers={1}
-            flights={[]}
+            flights={this.flights}
           />
           <VerifyBookingComponent
             path="/booking/verify"
             booking={this.state.booking}
-            flights={[]}
+            flights={this.flights}
           />
         </Router>
       </div>

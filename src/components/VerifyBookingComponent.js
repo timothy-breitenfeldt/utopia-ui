@@ -8,24 +8,12 @@ import BookingActions from "../actions/bookingActions";
 export default class VerifyBookingComponent extends React.Component {
   constructor(props) {
     super(props);
-  }
-
-  showFlight(flight, seat_number, index) {
-    return (
-      <p key={`flight${flight.id}${index}`}>
-        Flight {flight.id}: Departing from {flight.origin_airport.city},{" "}
-        {flight.origin_airport.id}
-        on {flight.departure_date} Seat Number: {seat_number}
-        <br />
-        Arives in {flight.dest_airport.city}, {flight.dest_airport.id} on{" "}
-        {flight.arival_date}
-        <br />
-        Price: {flight.price}
-      </p>
-    );
+    this.finalTotal = 0;
+    this.onBookItineraries = this.onBookItineraries.bind(this);
   }
 
   showItinerary(itinerary, traveler) {
+    this.finalTotal += itinerary.price_total;
     return (
       <div key={`itinerary${itinerary.id}${traveler.id}`}>
         <h4>{`${traveler.first_name} ${traveler.last_name}`}</h4>
@@ -34,26 +22,35 @@ export default class VerifyBookingComponent extends React.Component {
           <br />
           Phone Number: {traveler.phone}
         </p>
+
         {this.props.flights.map(
-          (f, i) => this.showFlight(f, itinerary.tickets[i], i),
+          (flight, i) =>
+            this.showFlight(flight, itinerary.tickets[i].seat_number, i),
           this
         )}
+      </div>
+    );
+  }
 
+  showFlight(flight, seat_number, index) {
+    return (
+      <div key={`flight${flight.id}${index}`}>
         <p>
-          tax: %0.065
+          Flight {flight.id}: Departing from {flight.origin_airport.city} on{" "}
+          {flight.departure_date} Seat Number: {seat_number}
           <br />
-          Subtotal: {itinerary.price_total}
+          Arives in {flight.dest_airport.city} on {flight.arrival_date}
           <br />
-          Total: {1.065 * flight.price_total}
+          Price: {flight.price}
         </p>
       </div>
     );
   }
 
-  onBookItineraries(event) {
+  onBookItineraries() {
     BookingActions.bookItineraries(
-      this.state.booking.travelers,
-      this.state.booking.itineraries
+      this.props.booking.travelers,
+      this.props.booking.itineraries
     );
   }
 
@@ -92,16 +89,24 @@ export default class VerifyBookingComponent extends React.Component {
             this.showItinerary(itinerary, this.props.booking.travelers[i])
           )}
 
+          <p>
+            tax: %0.065
+            <br />
+            Subtotal: {this.finalTotal}
+            <br />
+            Total: {(this.finalTotal * 1.065).toFixed(2)}
+          </p>
+
           <input
             type="button"
-            onclick={this.onBookItineraries.bind(this)}
+            onClick={this.onBookItineraries}
             value="Book Now"
           />
         </div>
       );
     }
 
-    return { content };
+    return <div>{content}</div>;
   }
 }
 
