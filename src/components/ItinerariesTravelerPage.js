@@ -41,7 +41,6 @@ export class ItinerariesTravelerPage extends React.Component{
 
     componentDidMount()
     {
-        console.log()
         ItineraryActions.readTravelersItineraries(this.props.travelerId);
     }
     render(){

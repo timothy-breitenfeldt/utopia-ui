@@ -1,6 +1,7 @@
 import Dispatcher from '../dispatcher/appDispatcher';
 import axios from 'axios';
 
+
 const ItineraryActions = {
     readItinerariesCounter: function(){
         Dispatcher.dispatch({
@@ -66,6 +67,23 @@ const ItineraryActions = {
                 actionType: 'read_itineraries_successful',
                 data:  res.data
             });
+        })
+        .catch((error)=> {
+            console.log(error);
+            Dispatcher.dispatch({
+                actionType: 'read_itineraries_failure'
+            });
+        });
+    },
+    deleteItinerary: function(id){
+        Dispatcher.dispatch({
+            actionType: 'read_itineraries_started'
+        });
+        axios.delete(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/itineraries/${id}`)
+        .then( () => {
+            Dispatcher.dispatch({
+                actionType: 'delete_itineraries_successful'
+            })
         })
         .catch((error)=> {
             console.log(error);

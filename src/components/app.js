@@ -18,6 +18,7 @@ import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
+import {ItineraryDeletedComponent} from "./itineraryDeletedComponent";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
@@ -39,9 +40,7 @@ export class App extends React.Component {
       flight: flightFactory.getFlightStateObject()
     };
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
-    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
-      this
-    );
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
   }
 
   changeSearchItinerary(id) {
@@ -189,6 +188,9 @@ export class App extends React.Component {
             booking={this.state.booking}
             numberOfTravelers={1}
             flights={[]}
+          />
+          <ItineraryDeletedComponent 
+            path="/itineraries/update"
           />
         </Router>
       </div>
