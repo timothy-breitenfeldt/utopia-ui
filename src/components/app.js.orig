@@ -12,7 +12,6 @@ import * as bookingFactory from "../factories/bookingFactory";
 import BookingComponent from "./BookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
-import { FlightPage } from "./FlightPage.js";
 import FlightStore from "../stores/flightStore";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
@@ -44,6 +43,7 @@ export class App extends React.Component {
     this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
     this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
+<<<<<<< HEAD
 
   }
 
@@ -52,6 +52,8 @@ export class App extends React.Component {
     flightList.push(flight);
     this.setState({ selectedFlights: flightList });
     navigate("/booking")
+=======
+>>>>>>> a572bd57080eb24b0bd074e70f488e3a40e61931
   }
 
   changeSearchItinerary(id) {
@@ -175,7 +177,6 @@ export class App extends React.Component {
             path="/account/logout"
             account={this.state.account}
           />
-          <FlightPage path="/flights/search" flight={this.state.flight} />
           <ItinerariesComponent
             path="/itineraries"
             itinerary={this.state.itinerary}
