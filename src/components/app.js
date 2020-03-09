@@ -36,12 +36,19 @@ export class App extends React.Component {
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
-      flight: flightFactory.getFlightStateObject()
+      flight: flightFactory.getFlightStateObject(),
+      selectedFlights: []
     };
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
     this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
       this
     );
+  }
+
+  handleFlightSelect(flight){
+    let flightList = this.state.selectedFlights;
+    flightList.push(flight);
+    this.setState({ selectedFlights: flightList })
   }
 
   changeSearchItinerary(id) {
