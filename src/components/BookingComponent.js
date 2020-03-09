@@ -1,5 +1,6 @@
 "use strict";
 
+import { navigate, Match } from "@reach/router";
 import React from "react";
 import Proptypes from "prop-types";
 
@@ -16,6 +17,25 @@ export default class BookingComponent extends React.Component {
 
     for (let i = 0; i < props.numberOfTravelers; i++) {
       this.state.travelers.push(travelerFactory.getTravelerObject());
+      let itinerariesLength = this.state.itineraries.push({
+        user_id: props.user.user_id,
+        agency_id: props.user.agency_id,
+        traveler_id: 0,
+        price_total: 0,
+        tickets: []
+      });
+
+      for (let flight of props.flights) {
+        const number = Math.floor(Math.random() * flight.capasity) + 1;
+        const letter = "abc"[Math.floor(Math.random() * 3)];
+        this.state.itineraries[itinerariesLength - 1].price_total +=
+          flight.price;
+        this.state.itineraries[itinerariesLength - 1].tickets.push({
+          id: flight.id,
+          price: flight.price,
+          seat_number: `${number}${letter}`
+        });
+      }
     }
 
     this.onTravelerFormSubmition = this.onTravelerFormSubmition.bind(this);
@@ -24,7 +44,8 @@ export default class BookingComponent extends React.Component {
 
   onTravelerFormSubmition(event) {
     event.preventDefault();
-    BookingActions.createTravelers(this.state.travelers);
+    //BookingActions.createTravelers(this.state.travelers);
+    navigate("/booking/verify", { replace: true });
   }
 
   handelTravelerFormChange(event, index) {
@@ -94,47 +115,33 @@ export default class BookingComponent extends React.Component {
   }
 
   render() {
-    let content = null;
-
-    if (this.props.booking.travelerState.pending) {
-      content = (
-        <div className="d-flex justify-content-center">
-          <div className="spinner-border" role="alert">
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      );
-    } else {
-      content = (
-        <div className="row">
-          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div className="card card-signin my-5">
-              <div className="card-body">
-                <h4 className="card-title text-center">Travelers</h4>
-                <div className="alert alert-danger" role="alert">
-                  {this.props.booking.error || null}
-                </div>
-
-                <form onSubmit={this.onTravelerFormSubmition} className="form">
-                  {this.state.travelers.map(
-                    (v, i) => this.createTravelerFields(i),
-                    this
-                  )}
-
-                  <input
-                    type="submit"
-                    value="Next"
-                    className="btn btn-lg btn-primary btn-block text-uppercase"
-                  />
-                </form>
+    return (
+      <div className="row">
+        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+          <div className="card card-signin my-5">
+            <div className="card-body">
+              <h4 className="card-title text-center">Travelers</h4>
+              <div className="alert alert-danger" role="alert">
+                {this.props.booking.error || null}
               </div>
+
+              <form onSubmit={this.onTravelerFormSubmition} className="form">
+                {this.state.travelers.map(
+                  (v, i) => this.createTravelerFields(i),
+                  this
+                )}
+
+                <input
+                  type="submit"
+                  value="Next"
+                  className="btn btn-lg btn-primary btn-block text-uppercase"
+                />
+              </form>
             </div>
           </div>
         </div>
-      );
-    }
-
-    return <div>{content}</div>;
+      </div>
+    );
   }
 }
 

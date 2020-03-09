@@ -10,6 +10,7 @@ import * as itineraryFactory from "../factories/itineraryFactory";
 import * as ticketFactory from "../factories/ticketFactory";
 import * as bookingFactory from "../factories/bookingFactory";
 import BookingComponent from "./BookingComponent";
+import VerifyBookingComponent from "./VerifyBookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
 import { FlightPage } from "./FlightPage.js";
@@ -125,7 +126,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Logout: "/account/logout",
-        Itineraries: "/itineraries"
+        Itineraries: "/itineraries",
         Booking: "/booking"
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
@@ -134,8 +135,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Login: "/account",
-        Register: "/account/register",
-        Booking: "/booking"
+        Register: "/account/register"
       };
       headerText = "Welcome";
     }
@@ -188,6 +188,11 @@ export class App extends React.Component {
             user={this.state.account.user}
             booking={this.state.booking}
             numberOfTravelers={1}
+            flights={[]}
+          />
+          <VerifyBookingComponent
+            path="/booking/verify"
+            booking={this.state.booking}
             flights={[]}
           />
         </Router>

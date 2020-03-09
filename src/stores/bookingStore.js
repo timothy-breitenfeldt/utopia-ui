@@ -33,7 +33,7 @@ class BookingStore extends EventEmitter {
 
   resetTravelersState() {
     this.store.booking.error = "";
-    this.store.booking.travelerState = {
+    this.store.booking.bookingState = {
       pending: false,
       failure: false,
       success: false
@@ -45,20 +45,19 @@ const bookingStore = new BookingStore();
 
 Dispatcher.register(action => {
   switch (action.actionType) {
-    case "booking_travelers_started":
+    case "booking_started":
       bookingStore.resetTravelersState();
-      bookingStore.store.booking.travelerState.pending = true;
+      bookingStore.store.booking.bookingState.pending = true;
       bookingStore.emitChange();
       break;
-    case "booking_travelers_successful":
+    case "booking_successful":
       bookingStore.resetTravelersState();
-      bookingStore.store.booking.travelerState.success = true;
-      bookingStore.store.booking.travelers = action.data;
+      bookingStore.store.booking.bookingState.success = true;
       bookingStore.emitChange();
       break;
-    case "booking_travelers_failure":
+    case "booking_failure":
       bookingStore.resetTravelersState();
-      bookingStore.store.booking.travelerState.failure = true;
+      bookingStore.store.booking.bookingState.failure = true;
       bookingStore.store.booking.error = action.error;
       bookingStore.emitChange();
       break;

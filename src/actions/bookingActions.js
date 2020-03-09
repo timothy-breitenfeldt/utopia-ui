@@ -11,7 +11,7 @@ const URL = config.url;
 const BookingActions = {
   createTravelers(travelers) {
     Dispatcher.dispatch({
-      actionType: "booking_travelers_started"
+      actionType: "booking_started"
     });
 
     const promises = [];
@@ -44,17 +44,33 @@ const BookingActions = {
       promises.push(promise);
     });
 
+    return Promise.all(promises).catch(function(error) {
+      console.log(error);
+      Dispatcher.dispatch({
+        actionType: "booking_failure",
+        error: error.toString()
+      });
+    });
+  },
+
+  createItineraries(itineraries) {
+    const promises = [];
+
+    for (let itinerary of itineraries) {
+      let promise = axios.post(`${URL}/api/online/itineraries`, itinerary);
+      promises.push(promise);
+    }
+
     Promise.all(promises)
       .then(function() {
         Dispatcher.dispatch({
-          actionType: "booking_travelers_successful",
-          data: travelers
+          actionType: "booking_successful"
         });
       })
       .catch(function(error) {
         console.log(error);
         Dispatcher.dispatch({
-          actionType: "booking_travelers_failure",
+          actionType: "booking_failure",
           error: error.toString()
         });
       });
