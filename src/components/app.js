@@ -137,6 +137,7 @@ export class App extends React.Component {
 
   componentWillUnmount() {
     accountStore.removeChangeListener(this._updateAccountState.bind(this));
+    bookingStore.removeChangeListener(this._updateBookingState.bind(this));
     FlightStore.removeChangeListener(this._onFlightChange.bind(this));
     ItineraryStore.removeChangeListener(this._onItineraryChange.bind(this));
     ticketStore.removeChangeListener(this._onTicketChange.bind(this));
@@ -156,7 +157,6 @@ export class App extends React.Component {
         Traveler: "/travelers",
         Booking: "/booking",
         Logout: "/account/logout"
-
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
       message = "Counter Agent";
@@ -195,7 +195,7 @@ export class App extends React.Component {
           </div>
           <NavigationBar links={links} />
         </header>
-        
+
         <Router>
           <Home
             path="/"
