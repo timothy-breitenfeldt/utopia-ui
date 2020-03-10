@@ -3,17 +3,31 @@
 import Dispatcher from "../dispatcher/appDispatcher";
 import axios from "axios";
 import Promise from "es6-promise";
+import Cookie from "js-cookie";
 
 import config from "../config";
 
 const URL = config.url;
+const HEADERS = { Authorization: `Bearer ${Cookie.get("token")}` };
 
 const BookingActions = {
-  createTravelers(travelers) {
+  async bookItineraries(travelers, itineraries) {
     Dispatcher.dispatch({
-      actionType: "booking_travelers_started"
+      actionType: "booking_started"
     });
 
+    await this._createTravelers(travelers);
+
+    //Copy traveler_id into itineraries and delete price_total
+    for (let i = 0; i < travelers.length; i++) {
+      itineraries[i].traveler_id = travelers[i].id;
+      delete itineraries[i].price_total;
+    }
+
+    this._createItineraries(itineraries);
+  },
+
+  _createTravelers(travelers) {
     const promises = [];
 
     //Get traveler IDs
@@ -44,17 +58,35 @@ const BookingActions = {
       promises.push(promise);
     });
 
+    return Promise.all(promises).catch(function(error) {
+      console.log(error);
+      Dispatcher.dispatch({
+        actionType: "booking_travelers_failure",
+        error: error.toString()
+      });
+    });
+  },
+
+  _createItineraries(itineraries) {
+    const promises = [];
+
+    for (let itinerary of itineraries) {
+      let promise = axios.post(`${URL}/api/online/itineraries`, itinerary, {
+        headers: HEADERS
+      });
+      promises.push(promise);
+    }
+
     Promise.all(promises)
       .then(function() {
         Dispatcher.dispatch({
-          actionType: "booking_travelers_successful",
-          data: travelers
+          actionType: "booking_successful"
         });
       })
       .catch(function(error) {
         console.log(error);
         Dispatcher.dispatch({
-          actionType: "booking_travelers_failure",
+          actionType: "booking_failure",
           error: error.toString()
         });
       });

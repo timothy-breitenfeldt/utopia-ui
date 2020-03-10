@@ -10,6 +10,7 @@ import * as itineraryFactory from "../factories/itineraryFactory";
 import * as ticketFactory from "../factories/ticketFactory";
 import * as bookingFactory from "../factories/bookingFactory";
 import BookingComponent from "./BookingComponent";
+import VerifyBookingComponent from "./VerifyBookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
 import { FlightPage } from "./FlightPage.js";
@@ -18,7 +19,7 @@ import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
-import {ItineraryDeletedComponent} from "./itineraryDeletedComponent";
+import { ItineraryDeletedComponent } from "./itineraryDeletedComponent";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
@@ -43,15 +44,16 @@ export class App extends React.Component {
 
     this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
-    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
-
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
+      this
+    );
   }
 
-  handleFlightSelect(flight){
+  handleFlightSelect(flight) {
     let flightList = this.state.selectedFlights;
     flightList.push(flight);
     this.setState({ selectedFlights: flightList });
-    navigate("/booking")
+    navigate("/booking");
   }
 
   changeSearchItinerary(id) {
@@ -144,8 +146,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Login: "/account",
-        Register: "/account/register",
-        Booking: "/booking"
+        Register: "/account/register"
       };
       headerText = "Welcome";
     }
@@ -203,11 +204,14 @@ export class App extends React.Component {
             user={this.state.account.user}
             booking={this.state.booking}
             numberOfTravelers={1}
-            flights={[]}
+            flights={this.state.selectedFlights}
           />
-          <ItineraryDeletedComponent 
-            path="/itineraries/update"
+          <VerifyBookingComponent
+            path="/booking/verify"
+            booking={this.state.booking}
+            flights={this.state.selectedFlights}
           />
+          <ItineraryDeletedComponent path="/itineraries/update" />
         </Router>
       </div>
     );
