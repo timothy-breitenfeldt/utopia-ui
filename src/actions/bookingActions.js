@@ -11,20 +11,16 @@ const URL = config.url;
 const HEADERS = { Authorization: `Bearer ${Cookie.get("token")}` };
 
 const BookingActions = {
-  bookItineraries(travelers, itineraries) {
+  async bookItineraries(travelers, itineraries) {
     Dispatcher.dispatch({
       actionType: "booking_started"
     });
 
-    const travelersResult = this._createTravelers(travelers).then(function(
-      result
-    ) {
-      alert("result: " + JSON.stringify(result));
-    });
+    await this._createTravelers(travelers);
 
     //Copy traveler_id into itineraries and delete price_total
     for (let i = 0; i < travelers.length; i++) {
-      itineraries[i].traveler_id = travelersResult[i].traveler_id;
+      itineraries[i].traveler_id = travelers[i].id;
       delete itineraries[i].price_total;
     }
 
@@ -62,17 +58,13 @@ const BookingActions = {
       promises.push(promise);
     });
 
-    return Promise.all(promises)
-      .then(function(result) {
-        alert(JSON.stringify(result));
-      })
-      .catch(function(error) {
-        console.log(error);
-        Dispatcher.dispatch({
-          actionType: "booking_failure",
-          error: error.toString()
-        });
+    return Promise.all(promises).catch(function(error) {
+      console.log(error);
+      Dispatcher.dispatch({
+        actionType: "booking_travelers_failure",
+        error: error.toString()
       });
+    });
   },
 
   _createItineraries(itineraries) {

@@ -9,33 +9,14 @@ import * as travelerFactory from "../factories/travelerFactory";
 export default class BookingComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      itineraries: props.booking.itineraries,
-      travelers: props.booking.travelers
-    };
 
     for (let i = 0; i < props.numberOfTravelers; i++) {
-      this.state.travelers.push(travelerFactory.getTravelerObject());
-      let itinerariesLength = this.state.itineraries.push({
-        user_id: props.user.user_id,
-        agency_id: props.user.agency_id,
-        traveler_id: 0,
-        price_total: 0,
-        tickets: []
-      });
-
-      for (let flight of props.flights) {
-        const number = Math.floor(Math.random() * flight.capacity) + 1;
-        const letter = "abc"[Math.floor(Math.random() * 3)];
-        this.state.itineraries[itinerariesLength - 1].price_total +=
-          flight.price;
-        this.state.itineraries[itinerariesLength - 1].tickets.push({
-          id: flight.id,
-          price: flight.price,
-          seat_number: `${number}${letter}`
-        });
-      }
+      this.props.booking.travelers.push(travelerFactory.getTravelerObject());
     }
+
+    this.state = {
+      travelers: props.booking.travelers
+    };
 
     this.onTravelerFormSubmition = this.onTravelerFormSubmition.bind(this);
     this.handelTravelerFormChange = this.handelTravelerFormChange.bind(this);
@@ -43,7 +24,28 @@ export default class BookingComponent extends React.Component {
 
   onTravelerFormSubmition(event) {
     event.preventDefault();
-    //BookingActions.createTravelers(this.state.travelers);
+    for (let i = 0; i < this.props.numberOfTravelers; i++) {
+      let itinerariesLength = this.props.booking.itineraries.push({
+        user_id: this.props.user.id,
+        agency_id: this.props.user.agency_id,
+        traveler_id: 0,
+        price_total: 0,
+        tickets: []
+      });
+
+      for (let flight of this.props.flights) {
+        const number = Math.floor(Math.random() * flight.capacity) + 1;
+        const letter = "abc"[Math.floor(Math.random() * 3)];
+        this.props.booking.itineraries[itinerariesLength - 1].price_total +=
+          flight.price;
+        this.props.booking.itineraries[itinerariesLength - 1].tickets.push({
+          flight_number: flight.id,
+          price: flight.price,
+          seat_number: `${number}${letter}`
+        });
+      }
+    }
+
     navigate("/booking/verify", { replace: true });
   }
 

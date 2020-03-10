@@ -164,8 +164,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Login: "/account",
-        Register: "/account/register",
-        booking: "/booking"
+        Register: "/account/register"
       };
       headerText = "Welcome";
     }
