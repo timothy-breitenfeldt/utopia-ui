@@ -4,6 +4,7 @@ import React from 'react';
 import {Link} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryActions from '../actions/ItineraryActions';
+import {Table} from 'react-bootstrap';
 export class ItinerariesComponent extends React.Component{
 
     createItineraryRow(itinerary)
@@ -65,7 +66,7 @@ export class ItinerariesComponent extends React.Component{
         if(this.props.itinerary.readState.success)
         {
             content = (
-                <table className="table">
+                <Table style bordered hover>
                     <thead>
                         <tr>
                             <th>Itinerary</th>
@@ -80,7 +81,7 @@ export class ItinerariesComponent extends React.Component{
                     <tbody>
                         {this.props.itinerary.itineraryList.map(this.createItineraryRow, this)}
                     </tbody>
-                </table>
+                </Table>
             );
         }
 
