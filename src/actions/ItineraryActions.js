@@ -26,7 +26,7 @@ const ItineraryActions = {
             actionType: 'read_itineraries_started'
         });
         const HEADERS = { Authorization: `Bearer ${Cookie.get("token")}` };
-        axios.get(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/online/itineraries`,[],{headers: HEADERS})
+        axios.get(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/online/itineraries`,{headers: HEADERS})
         .then( res => {
             Dispatcher.dispatch({
                 actionType: 'read_itineraries_successful',

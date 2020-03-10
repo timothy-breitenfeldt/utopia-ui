@@ -3,6 +3,7 @@ import React from 'react';
 import {Link} from '@reach/router';
 import PropTypes from 'prop-types';
 import TravelerActions from '../actions/travelerActions';
+import { Table } from 'react-bootstrap';
 export class TravelerComponent extends React.Component{
 
     componentDidMount(){
@@ -39,7 +40,7 @@ export class TravelerComponent extends React.Component{
         if(this.props.traveler.readState.success)
         {
             content = (
-                <table className="table">
+                <Table striped bordered hover size="md">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -57,7 +58,7 @@ export class TravelerComponent extends React.Component{
                     <tbody>
                         {this.props.traveler.travelerList.map(this.createTravelerRow, this)}
                     </tbody>
-                </table>
+                </Table>
             );
         }
 

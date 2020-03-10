@@ -4,7 +4,7 @@ import React from 'react';
 import {Link} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryActions from '../actions/ItineraryActions';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 export class ItinerariesTravelerPage extends React.Component{
 
     createItineraryRow(itinerary)
@@ -60,7 +60,7 @@ export class ItinerariesTravelerPage extends React.Component{
         if(this.props.itinerary.readState.success)
         {
             content = (
-                <Table style bordered hover>
+                <Table striped bordered hover size="md">
                     <thead>
                         <tr>
                             <th>Itinerary</th>

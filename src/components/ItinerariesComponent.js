@@ -4,7 +4,7 @@ import React from 'react';
 import {Link} from '@reach/router';
 import PropType from 'prop-types';
 import ItineraryActions from '../actions/ItineraryActions';
-import {Table} from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 export class ItinerariesComponent extends React.Component{
 
     createItineraryRow(itinerary)
@@ -42,9 +42,10 @@ export class ItinerariesComponent extends React.Component{
 
     componentDidMount()
     {
+        console.log(this.props.account.user);
         if(this.props.account.user.role === "COUNTER") {
             ItineraryActions.readItinerariesCounter();
-        } else if(this.props.account.user.role === "ONLINE"){
+        } else if(this.props.account.user.role === "TRAVELER"){
             ItineraryActions.readItinerariesOnline();
         } else if(this.props.account.user.role === "AGENT"){
             ItineraryActions.readItinerariesAgent();
@@ -66,7 +67,7 @@ export class ItinerariesComponent extends React.Component{
         if(this.props.itinerary.readState.success)
         {
             content = (
-                <Table style bordered hover>
+                <Table striped bordered hover size="md">
                     <thead>
                         <tr>
                             <th>Itinerary</th>
