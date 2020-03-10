@@ -19,7 +19,7 @@ import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
-import {ItineraryDeletedComponent} from "./itineraryDeletedComponent";
+import { ItineraryDeletedComponent } from "./itineraryDeletedComponent";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
@@ -46,15 +46,20 @@ export class App extends React.Component {
     this.handleTravelerAdd = this.handleTravelerAdd.bind(this);
     this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
-    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
-
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
+      this
+    );
   }
 
+<<<<<<< HEAD
   handleTravelerAdd(noOfTravelers) {
     this.setState({ travelers: noOfTravelers})
   }
 
   handleFlightSelect(flight){
+=======
+  handleFlightSelect(flight) {
+>>>>>>> aa80a72d993bfdbcc185189286e37179e1975ab2
     let flightList = this.state.selectedFlights;
     flightList.push(flight);
     this.setState({ selectedFlights: flightList });
@@ -151,8 +156,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Login: "/account",
-        Register: "/account/register",
-        Booking: "/booking"
+        Register: "/account/register"
       };
       headerText = "Welcome";
     }
@@ -213,10 +217,15 @@ export class App extends React.Component {
             numberOfTravelers={1}
             flights={this.state.selectedFlights}
           />
+<<<<<<< HEAD
+          <ItineraryDeletedComponent
+            path="/itineraries/update"
+=======
           <VerifyBookingComponent
             path="/booking/verify"
             booking={this.state.booking}
             flights={this.state.selectedFlights}
+>>>>>>> aa80a72d993bfdbcc185189286e37179e1975ab2
           />
           <ItineraryDeletedComponent path="/itineraries/update" />
         </Router>
