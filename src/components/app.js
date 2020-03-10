@@ -38,13 +38,19 @@ export class App extends React.Component {
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject(),
+      travelers: null,
       selectedFlights: []
     };
 
+    this.handleTravelerAdd = this.handleTravelerAdd.bind(this);
     this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
     this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
 
+  }
+
+  handleTravelerAdd(noOfTravelers) {
+    this.setState({ travelers: noOfTravelers})
   }
 
   handleFlightSelect(flight){
@@ -165,6 +171,7 @@ export class App extends React.Component {
             headerText={headerText}
             message={message}
             handleFlightSelect={this.handleFlightSelect}
+            handleTravelerAdd={this.handleTravelerAdd}
           />
           <LoginComponent path="/account" account={this.state.account} />
           <RegistrationComponent
@@ -205,7 +212,7 @@ export class App extends React.Component {
             numberOfTravelers={1}
             flights={[]}
           />
-          <ItineraryDeletedComponent 
+          <ItineraryDeletedComponent
             path="/itineraries/update"
           />
         </Router>
