@@ -19,7 +19,7 @@ import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
 import ticketStore from "../stores/ticketStore";
 import ItineraryStore from "../stores/itineraryStore";
-import {ItineraryDeletedComponent} from "./itineraryDeletedComponent";
+import { ItineraryDeletedComponent } from "./itineraryDeletedComponent";
 import RegistrationComponent from "./RegistrationComponent";
 import { ItinerariesComponent } from "./ItinerariesComponent";
 import { ItineraryPage } from "./ItineraryPage";
@@ -46,15 +46,44 @@ export class App extends React.Component {
     this.handleTravelerAdd = this.handleTravelerAdd.bind(this);
     this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
-    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
+    this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(
+      this
+    );
 
+    this.flights = [
+      {
+        id: 1,
+        capacity: 43,
+        price: 63.0,
+        arrival_date: "2019-04-06",
+        departure_date: "2019-11-06",
+        dest_airport: {
+          id: 13,
+          name: "Ollie",
+          street: "Flade",
+          country: "Indonesia",
+          state: null,
+          city: "Setonokalong",
+          postal_code: null
+        },
+        origin_airport: {
+          id: 24,
+          name: "Ambrose",
+          street: "Daltrey",
+          country: "Portugal",
+          state: "├ëvora",
+          city: "Cabrela",
+          postal_code: "7050-405"
+        }
+      }
+    ];
   }
 
   handleTravelerAdd(noOfTravelers) {
-    this.setState({ travelers: noOfTravelers})
+    this.setState({ travelers: noOfTravelers });
   }
 
-  handleFlightSelect(flight){
+  handleFlightSelect(flight) {
     let flightList = this.state.selectedFlights;
     flightList.push(flight);
     this.setState({ selectedFlights: flightList });
@@ -210,7 +239,7 @@ export class App extends React.Component {
             path="/booking"
             user={this.state.account.user}
             booking={this.state.booking}
-            numberOfTravelers={1}
+            numberOfTravelers={this.state.travelers}
             flights={this.state.selectedFlights}
           />
           <VerifyBookingComponent
