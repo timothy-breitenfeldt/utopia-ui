@@ -10,6 +10,7 @@ import * as itineraryFactory from "../factories/itineraryFactory";
 import * as ticketFactory from "../factories/ticketFactory";
 import * as bookingFactory from "../factories/bookingFactory";
 import BookingComponent from "./BookingComponent";
+import VerifyBookingComponent from "./VerifyBookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
 import { FlightPage } from "./FlightPage.js";
@@ -38,20 +39,26 @@ export class App extends React.Component {
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject(),
+      travelers: null,
       selectedFlights: []
     };
 
+    this.handleTravelerAdd = this.handleTravelerAdd.bind(this);
     this.handleFlightSelect = this.handleFlightSelect.bind(this);
     this.changeSearchItinerary = this.changeSearchItinerary.bind(this);
     this.changeSearchTravelerItinerary = this.changeSearchTravelerItinerary.bind(this);
 
   }
 
+  handleTravelerAdd(noOfTravelers) {
+    this.setState({ travelers: noOfTravelers})
+  }
+
   handleFlightSelect(flight){
     let flightList = this.state.selectedFlights;
     flightList.push(flight);
     this.setState({ selectedFlights: flightList });
-    navigate("/booking")
+    navigate("/booking");
   }
 
   changeSearchItinerary(id) {
@@ -165,6 +172,7 @@ export class App extends React.Component {
             headerText={headerText}
             message={message}
             handleFlightSelect={this.handleFlightSelect}
+            handleTravelerAdd={this.handleTravelerAdd}
           />
           <LoginComponent path="/account" account={this.state.account} />
           <RegistrationComponent
@@ -203,11 +211,14 @@ export class App extends React.Component {
             user={this.state.account.user}
             booking={this.state.booking}
             numberOfTravelers={1}
-            flights={[]}
+            flights={this.state.selectedFlights}
           />
-          <ItineraryDeletedComponent 
-            path="/itineraries/update"
+          <VerifyBookingComponent
+            path="/booking/verify"
+            booking={this.state.booking}
+            flights={this.state.selectedFlights}
           />
+          <ItineraryDeletedComponent path="/itineraries/update" />
         </Router>
       </div>
     );

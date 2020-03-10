@@ -19,7 +19,10 @@ export default class Home extends React.Component {
         </div>
 
         <div className="container">
-          <FlightSearch handleFlightSelect={this.props.handleFlightSelect}/>
+          <FlightSearch
+            handleTravelerAdd={this.props.handleTravelerAdd}
+            handleFlightSelect={this.props.handleFlightSelect}
+          />
         </div>
       </div>
     );
@@ -28,6 +31,7 @@ export default class Home extends React.Component {
 
 Home.propTypes = {
   handleFlightSelect: PropTypes.func.isRequired,
+  handleTravelerAdd: PropTypes.func.isRequired,
   headerText: PropTypes.string.isRequired,
   message: PropTypes.string
 };

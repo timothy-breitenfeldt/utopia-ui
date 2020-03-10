@@ -4,7 +4,7 @@ export function getBookingStateObject() {
   return {
     travelers: [],
     itineraries: [],
-    travelerState: {
+    bookingState: {
       pending: false,
       failure: false,
       success: false

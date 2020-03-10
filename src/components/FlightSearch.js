@@ -36,9 +36,26 @@ export default class FlightSearch extends React.Component {
     this.submitSearch       = this.submitSearch.bind(this);
     this.radioOnChange      = this.radioOnChange.bind(this);
     this.handleDestChange   = this.handleDestChange.bind(this);
+    this.handleTravelerAdd  = this.handleTravelerAdd.bind(this);
     this.handleReturnChange = this.handleReturnChange.bind(this);
     this.handleOriginChange = this.handleOriginChange.bind(this);
 
+  }
+
+  handleTravelerAdd() {
+
+    this.setState({
+      flight: {
+        ...this.state.flight,
+        passengers: event.target.value
+      }
+    })
+  }
+
+  submitSearch() {
+    event.preventDefault();
+    this.props.handleTravelerAdd(this.state.flight.passengers);
+    FlightActions.readFlights(this.state.flight);
   }
 
   radioOnChange() {
@@ -50,20 +67,11 @@ export default class FlightSearch extends React.Component {
     }));
   }
 
-  handleOriginChange() {
-    this.setState({
-      flight: {
-        ...this.state.flight,
-        origin_airport: { name: event.target.value}
-      }
-    })
-  }
-
   handleDestChange() {
     this.setState({
       flight: {
         ...this.state.flight,
-        dest_airport: { name: event.target.value }
+        dest_airport: { name: event.target.value}
       }
     })
   }
@@ -77,12 +85,13 @@ export default class FlightSearch extends React.Component {
     })
   }
 
-
-  submitSearch() {
-    event.preventDefault();
-    console.log("SUBMITTING SEARCH");
-    console.log(this.state.flight);
-    FlightActions.readFlights(this.state.flight);
+  handleOriginChange() {
+    this.setState({
+      flight: {
+        ...this.state.flight,
+        origin_airport: { name: event.target.value}
+      }
+    })
   }
 
   render() {
@@ -139,12 +148,15 @@ export default class FlightSearch extends React.Component {
               <InputGroup.Prepend>
                 <InputGroup.Text id="passengers-label" style={{width: '115px'}}>Passengers</InputGroup.Text>
               </InputGroup.Prepend>
-              <Form.Control as="select" name="passengers" onChange={this.handleFormChange}>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5+</option>
+              <Form.Control
+                as="select"
+                name="passengers"
+                onChange={this.handleTravelerAdd}>
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5+</option>
               </Form.Control>
             </InputGroup>
           </Form.Row>
@@ -168,7 +180,7 @@ export default class FlightSearch extends React.Component {
                 <InputGroup.Text id="to-label" style={{width: '115px'}}>To</InputGroup.Text>
               </InputGroup.Prepend>
               <FormControl
-                name="destination_airport"
+                name="dest_airport"
                 placeholder="City or airport code"
                 aria-label="To"
                 aria-describedby="to-label"
@@ -201,5 +213,6 @@ export default class FlightSearch extends React.Component {
 }
 
 FlightSearch.propTypes = {
+  handleTravelerAdd: PropTypes.func.isRequired,
   handleFlightSelect: PropTypes.func.isRequired
 };
