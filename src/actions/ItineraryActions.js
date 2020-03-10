@@ -1,6 +1,6 @@
 import Dispatcher from '../dispatcher/appDispatcher';
 import axios from 'axios';
-
+import Cookie from "js-cookie";
 
 const ItineraryActions = {
     readItinerariesCounter: function(){
@@ -25,7 +25,8 @@ const ItineraryActions = {
         Dispatcher.dispatch({
             actionType: 'read_itineraries_started'
         });
-        axios.get(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/online/itineraries`)
+        const HEADERS = { Authorization: `Bearer ${Cookie.get("token")}` };
+        axios.get(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/online/itineraries`,[],{headers: HEADERS})
         .then( res => {
             Dispatcher.dispatch({
                 actionType: 'read_itineraries_successful',

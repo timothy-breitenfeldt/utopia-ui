@@ -23,8 +23,8 @@ export default class FlightSearch extends React.Component {
 
       flight: {
 
-        dest_airport : { name: "" },
-        origin_airport      : { name: "" },
+        dest_airport : null,
+        origin_airport      : null,
         departure_date      : null,
         return_date         : null,
         passengers          : 1,

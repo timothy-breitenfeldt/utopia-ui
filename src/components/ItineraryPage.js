@@ -30,7 +30,6 @@ export class ItineraryPage extends React.Component{
                 <td> {ticket.flight.dest_airport.name} </td>
                 <td> {ticket.flight.departure_date} </td>
                 <td> {ticket.flight.origin_airport.name} </td>
-                <td> Settings </td>
             </tr>
         );
     }
@@ -59,7 +58,6 @@ export class ItineraryPage extends React.Component{
                             <th>To</th>
                             <th>Departure Date</th>
                             <th>From</th>
-                            <th>Settings</th>
                         </tr>
                     </thead>
                     <tbody>

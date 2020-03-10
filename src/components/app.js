@@ -13,7 +13,6 @@ import BookingComponent from "./BookingComponent";
 import VerifyBookingComponent from "./VerifyBookingComponent";
 import NavigationBar from "./NavigationBar";
 import Home from "./home.js";
-import { FlightPage } from "./FlightPage.js";
 import FlightStore from "../stores/flightStore";
 import LoginComponent from "./LoginComponent.js";
 import accountStore from "../stores/accountStore";
@@ -183,7 +182,6 @@ export class App extends React.Component {
             path="/account/logout"
             account={this.state.account}
           />
-          <FlightPage path="/flights/search" flight={this.state.flight} />
           <ItinerariesComponent
             path="/itineraries"
             itinerary={this.state.itinerary}
