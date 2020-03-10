@@ -56,6 +56,23 @@ export default class FlightSearch extends React.Component {
     event.preventDefault();
     this.props.handleTravelerAdd(this.state.flight.passengers);
     FlightActions.readFlights(this.state.flight);
+
+    // this.setState({
+    //   flight: {
+    //
+    //     passengers          : 1,
+    //     dest_airport        : null,
+    //     origin_airport      : null,
+    //     departure_date      : null,
+    //     return_date         : null,
+    //     oneWay              : true,
+    //
+    //   }
+    // });
+
+    // event.target.map( (input) => console.log(input) );
+    console.log(event.target.children)
+
   }
 
   radioOnChange() {
@@ -96,27 +113,22 @@ export default class FlightSearch extends React.Component {
 
   render() {
 
-    let returnDate = '';
-
-    if( this.state.flight.oneWay == false ){
-
-      returnDate = (
-        <Form.Row>
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Text id="return-label" style={{width: '115px'}}>Return</InputGroup.Text>
-            </InputGroup.Prepend>
-            <FormControl
-              name="return_date"
-              placeholder="YYYY-MM-DD"
-              aria-label="Return"
-              aria-describedby="return-label"
-              onChange={this.handleReturnChange}
-            />
-          </InputGroup>
-        </Form.Row>
-      );
-    }
+    let returnField  = (
+      <Form.Row>
+        <InputGroup className="mb-3">
+          <InputGroup.Prepend>
+            <InputGroup.Text id="return-label" style={{width: '115px'}}>Return</InputGroup.Text>
+          </InputGroup.Prepend>
+          <FormControl
+            name="return_date"
+            placeholder="YYYY-MM-DD"
+            aria-label="Return"
+            aria-describedby="return-label"
+            onChange={this.handleReturnChange}
+          />
+        </InputGroup>
+      </Form.Row>
+    );
 
     return(
       <div style={{
@@ -202,7 +214,7 @@ export default class FlightSearch extends React.Component {
               />
             </InputGroup>
           </Form.Row>
-          {returnDate}
+          { this.state.flight.oneWay ? null : returnField }
           <Button variant="dark" type="submit" value="Submit">Search</Button>
         </Form>
         <hr></hr>
