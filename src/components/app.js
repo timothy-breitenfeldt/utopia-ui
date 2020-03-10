@@ -152,9 +152,11 @@ export class App extends React.Component {
     if (this.state.account.user.role == "COUNTER") {
       links = {
         Home: "/",
-        Logout: "/account/logout",
         Itineraries: "/itineraries",
-        Traveler: "/travelers"
+        Traveler: "/travelers",
+        Booking: "/booking",
+        Logout: "/account/logout"
+
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
       message = "Counter Agent";
