@@ -60,6 +60,7 @@ export default class LoginComponent extends React.Component {
                       value={this.state.email}
                       onChange={this.handelFormChange}
                       required
+                      autoFocus
                     />
                   </div>
 

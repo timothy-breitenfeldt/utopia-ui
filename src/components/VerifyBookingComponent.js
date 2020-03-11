@@ -4,6 +4,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import BookingActions from "../actions/bookingActions";
+import bookingStore from "../stores/bookingStore";
 
 export default class VerifyBookingComponent extends React.Component {
   constructor(props) {
@@ -66,6 +67,7 @@ export default class VerifyBookingComponent extends React.Component {
         </div>
       );
     } else if (this.props.booking.bookingState.success) {
+      bookingStore.resetBookingsState();
       content = (
         <div>
           <h3>Successfully Booked!</h3>

@@ -10,7 +10,9 @@ export default class BookingComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    for (let i = 0; i < props.numberOfTravelers; i++) {
+    this.props.booking.travelers.splice(0, this.props.booking.travelers.length);
+
+    for (let i = 0; i < this.props.numberOfTravelers; i++) {
       this.props.booking.travelers.push(travelerFactory.getTravelerObject());
     }
 
@@ -116,33 +118,45 @@ export default class BookingComponent extends React.Component {
   }
 
   render() {
-    return (
-      <div className="row">
-        <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
-          <div className="card card-signin my-5">
-            <div className="card-body">
-              <h4 className="card-title text-center">Travelers</h4>
-              <div className="alert alert-danger" role="alert">
-                {this.props.booking.error || null}
+    let content = null;
+
+    if (this.props.user && this.props.user.role) {
+      content = (
+        <div className="row">
+          <div className="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div className="card card-signin my-5">
+              <div className="card-body">
+                <h4 className="card-title text-center">Travelers</h4>
+                <div className="alert alert-danger" role="alert">
+                  {this.props.booking.error || null}
+                </div>
+
+                <form onSubmit={this.onTravelerFormSubmition} className="form">
+                  {this.state.travelers.map(
+                    (v, i) => this.createTravelerFields(i),
+                    this
+                  )}
+
+                  <input
+                    type="submit"
+                    value="Next"
+                    className="btn btn-lg btn-primary btn-block text-uppercase"
+                  />
+                </form>
               </div>
-
-              <form onSubmit={this.onTravelerFormSubmition} className="form">
-                {this.state.travelers.map(
-                  (v, i) => this.createTravelerFields(i),
-                  this
-                )}
-
-                <input
-                  type="submit"
-                  value="Next"
-                  className="btn btn-lg btn-primary btn-block text-uppercase"
-                />
-              </form>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      content = (
+        <div>
+          <p>Please login to book a flight.</p>
+        </div>
+      );
+    }
+
+    return <div>{content}</div>;
   }
 }
 

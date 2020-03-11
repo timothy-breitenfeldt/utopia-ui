@@ -38,7 +38,7 @@ export class App extends React.Component {
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject(),
-      travelers: null,
+      travelers: 0,
       selectedFlights: []
     };
 
@@ -172,8 +172,7 @@ export class App extends React.Component {
       links = {
         Home: "/",
         Logout: "/account/logout",
-        Itineraries: "/itineraries",
-        Booking: "/booking"
+        Itineraries: "/itineraries"
       };
       headerText = `Welcome ${user.first_name} ${user.last_name}`;
       message = "Online User";
