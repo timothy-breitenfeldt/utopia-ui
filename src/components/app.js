@@ -39,7 +39,6 @@ export class App extends React.Component {
       traveler: travelerFactory.getTravelerStateObject(),
       flight: flightFactory.getFlightStateObject(),
       travelers: 0,
-      selectedFlights: []
     };
 
     this.handleTravelerAdd = this.handleTravelerAdd.bind(this);

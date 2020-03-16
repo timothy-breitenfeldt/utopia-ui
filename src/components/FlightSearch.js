@@ -23,7 +23,7 @@ export default class FlightSearch extends React.Component {
 
       flight: {
 
-        dest_airport : null,
+        dest_airport        : null,
         origin_airport      : null,
         departure_date      : null,
         return_date         : null,
@@ -53,25 +53,10 @@ export default class FlightSearch extends React.Component {
   }
 
   submitSearch() {
+
     event.preventDefault();
     this.props.handleTravelerAdd(this.state.flight.passengers);
     FlightActions.readFlights(this.state.flight);
-
-    // this.setState({
-    //   flight: {
-    //
-    //     passengers          : 1,
-    //     dest_airport        : null,
-    //     origin_airport      : null,
-    //     departure_date      : null,
-    //     return_date         : null,
-    //     oneWay              : true,
-    //
-    //   }
-    // });
-
-    // event.target.map( (input) => console.log(input) );
-    console.log(event.target.children)
 
   }
 

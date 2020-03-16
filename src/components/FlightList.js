@@ -57,8 +57,6 @@ export default class FlightList extends React.Component{
   }
 
   _onFlightChange(){
-    console.log("FLIGHTLIST");
-    console.log(FlightStore.getAllflights());
     this.setState({ flight: FlightStore.getAllflights() });
   }
 
