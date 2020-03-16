@@ -4,7 +4,8 @@
   "description": "Utopia Airlines Reservation System",
   "main": "main.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "build": "gulp build"
   },
   "author": "",
   "license": "",
