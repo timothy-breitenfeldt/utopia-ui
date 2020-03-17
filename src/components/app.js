@@ -212,12 +212,12 @@ export class App extends React.Component {
             user={this.state.account.user}
             booking={this.state.booking}
             numberOfTravelers={this.state.travelers}
-            flights={this.state.selectedFlights}
+            flights={this.state.flights}
           />
           <VerifyBookingComponent
             path="/booking/verify"
             booking={this.state.booking}
-            flights={this.state.selectedFlights}
+            flights={this.state.flights}
           />
           <ItineraryDeletedComponent path="/itineraries/update" />
         </Router>
