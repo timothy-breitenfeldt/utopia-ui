@@ -5,9 +5,6 @@ const FlightActions = {
 
   readFlights: function(flight){
 
-    console.log("flightACTION");
-    console.log(flight);
-
     Dispatcher.dispatch({
       actionType: 'read_flights_started'
     });
@@ -15,8 +12,6 @@ const FlightActions = {
     axios.post(`https://v2z3jctj5b.execute-api.us-east-1.amazonaws.com/PROD/api/counter/flights/search`, flight)
     .then( res => {
 
-      console.log(res.data);
-      
       Dispatcher.dispatch({
         actionType: 'read_flights_successful',
         data:  res.data
