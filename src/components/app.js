@@ -37,7 +37,7 @@ export class App extends React.Component {
       itinerary: itineraryFactory.getItineraryStateObject(),
       ticket: ticketFactory.getTicketStateObject(),
       traveler: travelerFactory.getTravelerStateObject(),
-      flight: flightFactory.getFlightStateObject(),
+      flights: [],
       travelers: 0,
     };
 
@@ -48,33 +48,7 @@ export class App extends React.Component {
       this
     );
 
-    this.flights = [
-      {
-        id: 1,
-        capacity: 43,
-        price: 63.0,
-        arrival_date: "2019-04-06",
-        departure_date: "2019-11-06",
-        dest_airport: {
-          id: 13,
-          name: "Ollie",
-          street: "Flade",
-          country: "Indonesia",
-          state: null,
-          city: "Setonokalong",
-          postal_code: null
-        },
-        origin_airport: {
-          id: 24,
-          name: "Ambrose",
-          street: "Daltrey",
-          country: "Portugal",
-          state: "├ëvora",
-          city: "Cabrela",
-          postal_code: "7050-405"
-        }
-      }
-    ];
+
   }
 
   handleTravelerAdd(noOfTravelers) {
@@ -82,9 +56,9 @@ export class App extends React.Component {
   }
 
   handleFlightSelect(flight) {
-    let flightList = this.state.selectedFlights;
+    let flightList = this.state.flights;
     flightList.push(flight);
-    this.setState({ selectedFlights: flightList });
+    this.setState({ flights: flightList });
     navigate("/booking");
   }
 
